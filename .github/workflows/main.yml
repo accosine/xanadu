@@ -107,10 +107,9 @@ jobs:
 
   e2e:
     name: 🧪 Test ✉️🗜 with 🎭
-    #     runs-on: ubuntu-22.04
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.44.0
+      image: mcr.microsoft.com/playwright:v1.44.1
     strategy:
       fail-fast: false
     steps:
