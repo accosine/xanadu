@@ -1,0 +1,81 @@
+{
+  "name": "xanadu",
+  "private": true,
+  "version": "0.0.0",
+  "author": "Duncan Kolba <duncankolba@gmail.com>",
+  "description": "Xanadu Web Components",
+  "type": "module",
+  "main": "dist/index.js",
+  "license": "SEE LICENSE IN LICENSE",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "npm run build:components && npm run build:storybook",
+    "build:components": "vite build",
+    "build:storybook": "storybook build",
+    "dependencies:list-outdated": "npm-check-updates --format repo --peer",
+    "dependencies:update": "npm-check-updates --peer -u && npm install",
+    "dev": "vite",
+    "lint": "npm run lint:code && npm run lint:style",
+    "lint:code": "eslint --cache --cache-location ./node_modules/.cache/eslint ./src ./stories",
+    "lint:style": "stylelint src/**/*.{css,styles.js}",
+    "storybook": "storybook dev -p 6006",
+    "test": "playwright test",
+    "typecheck": "tsc",
+    "ok": "npm run typecheck && npm run lint && npm run test && npm run coverage && npm run build",
+    "format": "prettier --write src stories styles",
+    "coverage": "npm run coverage:collect && npm run coverage:convert",
+    "coverage:collect": "playwright test",
+    "coverage:convert": "npx nyc report --reporter=html",
+    "coverage:serve": "npx http-server coverage"
+  },
+  "devDependencies": {
+    "@efficientcss/stylelint-config-ecss": "1.0.0-beta-10",
+    "@playwright/test": "1.44.0",
+    "@storybook/addon-essentials": "8.1.1",
+    "@storybook/addon-links": "8.1.1",
+    "@storybook/blocks": "8.1.1",
+    "@storybook/test": "8.1.1",
+    "@storybook/web-components": "8.1.1",
+    "@storybook/web-components-vite": "8.1.1",
+    "@typescript-eslint/eslint-plugin": "6.21.0",
+    "browserslist": "4.23.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-config-standard-with-typescript": "43.0.1",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-n": "16.6.2",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-storybook": "0.8.0",
+    "globals": "15.3.0",
+    "lightningcss": "1.25.0",
+    "lit": "3.1.3",
+    "npm-check-updates": "16.14.20",
+    "nyc": "15.1.0",
+    "prettier": "3.2.5",
+    "storybook": "8.1.1",
+    "stylelint": "16.5.0",
+    "stylelint-config-standard": "36.0.0",
+    "stylelint-prettier": "5.0.0",
+    "typescript": "5.4.5",
+    "vite": "5.2.11",
+    "vite-plugin-dts": "3.9.1",
+    "vite-plugin-istanbul": "6.0.2"
+  },
+  "contributors": [
+    {
+      "name": "Duncan Kolba",
+      "email": "duncankolba@gmail.com"
+    }
+  ],
+  "keywords": [
+    "web components"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "printWidth": 80
+  }
+}

@@ -1,0 +1,204 @@
+const ZERO = 0;
+const ONE = 1;
+const TWO = 2;
+const THOUSAND = 1000;
+const MILLISECONDS = 1000;
+const SECONDS = 60;
+const MINUTES = 60;
+const HOURS = 24;
+
+/**
+ * A class to represent the StopWatch element
+ */
+export class Countdown extends HTMLElement {
+  /**
+   * Web component can be registered with as `<countdown-o-tronic>`
+   */
+  static register(tagName?: string) {
+    globalThis.window.customElements.define(
+      tagName || 'x-countdown',
+      Countdown
+    );
+  }
+
+  /**
+   * The list of attributes which will call the a`attributeChangedCallback`
+   */
+  static get observedAttributes(): string[] {
+    return ['days', 'hours', 'minutes', 'seconds'];
+  }
+
+  /**
+   * Give this element its own encapsulated DOM
+   */
+  #shadowRoot: ShadowRoot = this.attachShadow({ mode: 'open' });
+
+  // Initialize private state
+
+  #start = Date.now();
+  #days = ZERO;
+  #hours = ZERO;
+
+  #minutes = ZERO;
+
+  #seconds = ZERO;
+  #lastrender = Date.now();
+  #remainingTimeInMs = ONE;
+
+  #minutesToMs = SECONDS * MILLISECONDS;
+  #hoursToMs = MINUTES * this.#minutesToMs;
+  #daysToMs = HOURS * this.#hoursToMs;
+  #msToMinutes = ONE / SECONDS / MILLISECONDS;
+  #msToHours = ONE / MINUTES / SECONDS / MILLISECONDS;
+  #msToDays = ONE / HOURS / MINUTES / SECONDS / MILLISECONDS;
+
+  /**
+   * Setup when the compontent was mounted into the DOM
+   */
+  connectedCallback() {
+    const renderTemplate = this.#getTemplate({
+      hasDays: null,
+      hasHours: null,
+      hasMinutes: null,
+      hasSeconds: null
+    });
+    this.#shadowRoot.replaceChildren(renderTemplate);
+
+    // Start the timer
+    this.#tick();
+  }
+
+  /**
+   * Called whenever the list of attributes in `observedAttributes` changes
+   */
+  attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
+    this.#start = Date.now();
+    this.#remainingTimeInMs = ONE;
+    switch (name) {
+      case 'seconds':
+        this.#seconds = Number(newValue);
+        break;
+      case 'minutes':
+        this.#minutes = Number(newValue);
+        break;
+      case 'hours':
+        this.#hours = Number(newValue);
+        break;
+      case 'days':
+        this.#days = Number(newValue);
+        break;
+      default:
+        break;
+    }
+  }
+
+  static zeroIfNegative(number: number) {
+    return number < ONE ? ONE : number;
+  }
+
+  #calculateRemainingTimeInMs() {
+    const futureDaysInMs = this.#days * this.#daysToMs;
+    const futureHoursInMs = this.#hours * this.#hoursToMs;
+    const futureMinutesInMs = this.#minutes * this.#minutesToMs;
+    const futureSecondsInMs = this.#seconds * MILLISECONDS;
+    const countdownEndDate =
+      this.#start +
+      futureDaysInMs +
+      futureHoursInMs +
+      futureMinutesInMs +
+      futureSecondsInMs;
+
+    this.#remainingTimeInMs = countdownEndDate - Date.now();
+  }
+
+  #calculateCountdown() {
+    this.#calculateRemainingTimeInMs();
+
+    const calculatedDays = Math.trunc(this.#remainingTimeInMs * this.#msToDays);
+    const remainingDays = Countdown.zeroIfNegative(calculatedDays);
+
+    const calculatedHours = Math.trunc(
+      (this.#remainingTimeInMs - remainingDays * this.#daysToMs) *
+        this.#msToHours
+    );
+    const remainingHours = Countdown.zeroIfNegative(calculatedHours);
+
+    const calculatedMinutes = Math.trunc(
+      (this.#remainingTimeInMs -
+        remainingDays * this.#daysToMs -
+        remainingHours * this.#hoursToMs) *
+        this.#msToMinutes
+    );
+    const remainingMinutes = Countdown.zeroIfNegative(calculatedMinutes);
+
+    const calculatedSeconds = Math.trunc(
+      (this.#remainingTimeInMs -
+        remainingDays * this.#daysToMs -
+        remainingHours * this.#hoursToMs -
+        remainingMinutes * this.#minutesToMs) /
+        MILLISECONDS
+    );
+    const remainingSeconds = Countdown.zeroIfNegative(calculatedSeconds);
+
+    return [remainingDays, remainingHours, remainingMinutes, remainingSeconds];
+  }
+
+  #getTemplate({
+    hasDays,
+    hasHours,
+    hasMinutes,
+    hasSeconds
+  }: {
+    hasDays: string | null;
+    hasHours: string | null;
+    hasMinutes: string | null;
+    hasSeconds: string | null;
+  }) {
+    const [days, hours, minutes, seconds] = this.#calculateCountdown().map(
+      (number) => String(number).padStart(TWO, '0')
+    );
+    const withDays = `${days}:${hours}:${minutes}:${seconds}`;
+    const withHours = `${hours}:${minutes}:${seconds}`;
+    const withMinutes = `${minutes}:${seconds}`;
+    const withSeconds = `${seconds}`;
+
+    switch (true) {
+      case Boolean(hasDays):
+        return withDays;
+      case Boolean(hasHours):
+        return withHours;
+      case Boolean(hasMinutes):
+        return withMinutes;
+      case Boolean(hasSeconds):
+        return withSeconds;
+      default:
+        return '00:00:00:00';
+    }
+  }
+
+  #tick() {
+    const now = Date.now();
+    if (now - this.#lastrender > THOUSAND && this.#remainingTimeInMs > ZERO) {
+      const renderTemplate = this.#getTemplate({
+        hasDays: this.getAttribute('days'),
+        hasHours: this.getAttribute('hours'),
+        hasMinutes: this.getAttribute('minutes'),
+        hasSeconds: this.getAttribute('seconds')
+      });
+
+      this.#shadowRoot.replaceChildren(renderTemplate);
+      this.#lastrender = now;
+    }
+
+    // Schedule next update
+    globalThis.window?.requestAnimationFrame?.(() => this.#tick());
+  }
+
+  addStylesheet(styles: CSSStyleSheet) {
+    if (styles) {
+      this.#shadowRoot.adoptedStyleSheets = [styles];
+    }
+  }
+}
+
+export default Countdown;
