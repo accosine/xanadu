@@ -1,34 +1,22 @@
-import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
-import js from '@eslint/js';
-import typescriptParser from '@typescript-eslint/parser';
+import pluginJs from '@eslint/js';
 import storybook from 'eslint-plugin-storybook';
+import tseslint from 'typescript-eslint';
 
 export default [
+  { ...pluginJs.configs.all },
+  ...tseslint.configs.recommended,
   {
+    files: ['src/**/*.{js,ts}', 'stories/**/*.{js,ts}'],
+    languageOptions: { globals: globals.browser },
     plugins: {
       storybook
     },
-    files: ['src/**/*.{js,ts}', 'stories/**/*.{js,ts}'],
-    ...js.configs.all
-  },
-  {
-    files: ['src/**/*.{js,ts}', 'stories/**/*.{js,ts}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      globals: {
-        ...globals.browser,
-        myCustomGlobal: 'readonly'
-      },
-      parser: typescriptParser,
-      sourceType: 'module'
-    },
-    plugins: { eslintPlugin },
     rules: {
       'no-ternary': 'off',
+      'no-undef': 'off',
       'one-var': 'off',
-      'sort-imports': ['error', { ignoreCase: true }],
-      'no-undef': 'off'
+      'sort-imports': ['error', { ignoreCase: true }]
     }
   }
 ];

@@ -3,7 +3,6 @@
  * All web component setup is done in `.storybook/preview.ts`.
  */
 import { html } from 'lit';
-import type { Meta } from '@storybook/web-components';
 
 const meta = {
   argTypes: {
@@ -16,7 +15,7 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   title: 'Example/Countdown'
-} satisfies Meta<any>;
+};
 export default meta;
 
 export const Primary = {
