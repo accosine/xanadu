@@ -1,3 +1,6 @@
-import { loadCountdown } from './index.ts';
+import { loader, styler } from './loaders/loader.ts';
+import countdownCss from './components/countdown.css?inline';
 
-loadCountdown();
+// Load Countdown custom element and corresponding stlyes
+loader('x-countdown', 'Countdown');
+styler('x-countdown', countdownCss);
