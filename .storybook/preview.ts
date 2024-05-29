@@ -1,5 +1,6 @@
+import { loader, styler } from '../src/loaders/loader.ts';
 import type { Preview } from '@storybook/web-components';
-import { loadCountdown } from '../src/loaders/countdown_loader.ts';
+import countdownCss from '../src/components/countdown.css?inline';
 
 // Wait for the preview frame in storybook to have fully loaded
 addEventListener('DOMContentLoaded', (event) => {
@@ -7,7 +8,8 @@ addEventListener('DOMContentLoaded', (event) => {
    * Then fire the web component loader, so custom elements can receive styling
    * from the outside.
    * */
-  loadCountdown();
+  loader('x-countdown', 'Countdown');
+  styler('x-countdown', countdownCss);
 });
 
 const preview: Preview = {
