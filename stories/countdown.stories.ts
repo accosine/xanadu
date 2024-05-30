@@ -25,11 +25,12 @@ export const Primary = {
     minutes: '44',
     seconds: '38'
   },
-  render: ({ days, hours, minutes, seconds }) =>
-    html`<x-countdown
+  render: ({ days, hours, minutes, seconds }) => html`
+    <x-countdown
       days="${days}"
       hours="${hours}"
       minutes="${minutes}"
       seconds="${seconds}"
-    ></x-countdown>`
+    ></x-countdown>
+  `
 };

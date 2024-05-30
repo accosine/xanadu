@@ -29,9 +29,9 @@ export const styler = <T extends AllCustomElements>(
   const styles = new CSSStyleSheet();
   styles.replaceSync(customElementStyles);
 
-  const allCountdowns = document.getElementsByTagName(
+  const allCountdowns = document.querySelectorAll(
     customElementTag
-  ) as HTMLCollectionOf<T>;
+  ) as NodeListOf<T>;
 
   for (const customElement of allCountdowns) {
     customElement.addStylesheet(styles);

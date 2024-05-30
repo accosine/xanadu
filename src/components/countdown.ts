@@ -57,10 +57,10 @@ export class Countdown extends HTMLElement {
    */
   connectedCallback() {
     const renderTemplate = this.#getTemplate({
-      hasDays: null,
-      hasHours: null,
-      hasMinutes: null,
-      hasSeconds: null
+      hasDays: Object.create(null),
+      hasHours: Object.create(null),
+      hasMinutes: Object.create(null),
+      hasSeconds: Object.create(null)
     });
     this.#shadowRoot.replaceChildren(renderTemplate);
 
@@ -74,21 +74,30 @@ export class Countdown extends HTMLElement {
   attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
     this.#start = Date.now();
     this.#remainingTimeInMs = ONE;
-    switch (name) {
-      case 'seconds':
-        this.#seconds = Number(newValue);
+    this.#reflectChangedAttributes(name, newValue);
+  }
+
+  #reflectChangedAttributes(attributeName: string, newAttributeValue: string) {
+    switch (attributeName) {
+      case 'seconds': {
+        this.#seconds = Number(newAttributeValue);
         break;
-      case 'minutes':
-        this.#minutes = Number(newValue);
+      }
+      case 'minutes': {
+        this.#minutes = Number(newAttributeValue);
         break;
-      case 'hours':
-        this.#hours = Number(newValue);
+      }
+      case 'hours': {
+        this.#hours = Number(newAttributeValue);
         break;
-      case 'days':
-        this.#days = Number(newValue);
+      }
+      case 'days': {
+        this.#days = Number(newAttributeValue);
         break;
-      default:
+      }
+      default: {
         break;
+      }
     }
   }
 
@@ -157,22 +166,23 @@ export class Countdown extends HTMLElement {
     const [days, hours, minutes, seconds] = this.#calculateCountdown().map(
       (number) => String(number).padStart(TWO, '0')
     );
-    const withDays = `${days}:${hours}:${minutes}:${seconds}`;
-    const withHours = `${hours}:${minutes}:${seconds}`;
-    const withMinutes = `${minutes}:${seconds}`;
-    const withSeconds = `${seconds}`;
 
     switch (true) {
-      case Boolean(hasDays):
-        return withDays;
-      case Boolean(hasHours):
-        return withHours;
-      case Boolean(hasMinutes):
-        return withMinutes;
-      case Boolean(hasSeconds):
-        return withSeconds;
-      default:
+      case Boolean(hasDays): {
+        return `${days}:${hours}:${minutes}:${seconds}`;
+      }
+      case Boolean(hasHours): {
+        return `${hours}:${minutes}:${seconds}`;
+      }
+      case Boolean(hasMinutes): {
+        return `${minutes}:${seconds}`;
+      }
+      case Boolean(hasSeconds): {
+        return `${seconds}`;
+      }
+      default: {
         return '00:00:00:00';
+      }
     }
   }
 
