@@ -1,3 +1,4 @@
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import storybook from 'eslint-plugin-storybook';
@@ -17,6 +18,12 @@ export default [
       'no-undef': 'off',
       'one-var': 'off',
       'sort-imports': ['error', { ignoreCase: true }]
+    }
+  },
+  eslintPluginUnicorn.configs['flat/recommended'],
+  {
+    rules: {
+      'unicorn/better-regex': 'warn'
     }
   }
 ];
