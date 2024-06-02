@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Simple Countdown test', async ({ page }) => {
-  const customElementCountdown = await page.locator('x-countdown');
+  const customElementCountdown = await page.locator('x-countdown').first();
 
   await expect(customElementCountdown).toBeVisible();
   await expect(customElementCountdown).toContainText('02:03:05');

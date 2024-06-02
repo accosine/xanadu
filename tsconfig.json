@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "checkJs": true
   },
-  "include": ["src/**/*.ts", "declaration.d.ts"],
+  "include": ["src/**/*.ts", "declaration.d.ts", "development.ts"],
   "exclude": ["node_modules"]
 }
