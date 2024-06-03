@@ -101,7 +101,7 @@ export class Countdown extends HTMLElement {
     }
   }
 
-  static zeroIfNegative(number: number) {
+  static zeroIfNegative(number: number): number {
     return number < ONE ? ONE : number;
   }
 
