@@ -27,7 +27,12 @@ export default defineConfig({
     }
   },
   plugins: [
-    dts(/* { rollupTypes: true }*/),
+    dts({
+      include: ['src', 'declaration.d.ts'],
+      outDir: 'dist',
+      rollupTypes: true,
+      strictOutput: false
+    }),
     ...(process.env.USE_BABEL_PLUGIN_ISTANBUL
       ? [
           IstanbulPlugin({
