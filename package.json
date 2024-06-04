@@ -9,6 +9,10 @@
   "exports": {
     ".": "./dist/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/accosine/xanadu.git"
+  },
   "scripts": {
     "build": "npm run build:components && npm run build:storybook",
     "build:components": "vite build",
