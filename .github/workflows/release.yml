@@ -32,10 +32,20 @@ jobs:
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-      - name: Check Tag
-        id: check-tag
+      - name: Check Stable Tag
+        if: env.RELEASE_ON_MAIN_BRANCH == 'true'
+        id: check-stable-tag
         run: |
           if [[ $RELEASE_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "VALID_TAG=true" >> $GITHUB_ENV; else exit 1
+          fi
+
+      - name: Check Experimental Tag
+        if: env.PRERELEASE_NOT_ON_MAIN_BRANCH == 'true'
+        id: check-experimental-tag
+        # Regex from https://stackoverflow.com/questions/72900289/regex-for-semver
+        run: |
+          if [[ $RELEASE_VERSION =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-(0|[1-9A-Za-z-][0-9A-Za-z-]*)(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$ ]]; then
             echo "VALID_TAG=true" >> $GITHUB_ENV; else exit 1
           fi
 
@@ -51,23 +61,7 @@ jobs:
           echo "🚨 ALERT: KILLER ROBOT ATTACKS 🔫🤖 !!!"
           exit 1
 
-      - name: Runs on Pre-Release
-        if: env.PRERELEASE_NOT_ON_MAIN_BRANCH == 'true'
-        run: |
-          echo "This is a Pre-Release"
-          echo RELEASE_VERSION $RELEASE_VERSION
-          echo GITHUB_REF $GITHUB_REF
-          echo GITHUB_ACTOR $GITHUB_ACTOR
-          echo GITHUB_COMMITISH $GITHUB_COMMITISH
-          echo GITHUB_PRE_RELEASE $GITHUB_PRE_RELEASE
-          echo GITHUB_SHA $GITHUB_SHA
-          GITHUB_SHA_SHORT=$(echo "$GITHUB_SHA" | cut -c1-7)
-          VALID_SEMVER_VERSION=$(echo "$RELEASE_VERSION"-"$GITHUB_SHA_SHORT")
-          echo VALID_SEMVER_VERSION "$VALID_SEMVER_VERSION"
-          echo "VALID_SEMVER_VERSION=$(echo $RELEASE_VERSION-$GITHUB_SHA_SHORT)" >> $GITHUB_ENV
-
       - name: Runs on Release
-        if: env.RELEASE_ON_MAIN_BRANCH == 'true'
         run: |
           echo "This is a Release"
           echo RELEASE_VERSION $RELEASE_VERSION
@@ -94,7 +88,7 @@ jobs:
         run: cat jsr.json
 
       - name: Publish JSR package
-        run: npx jsr publish --dry-run --allow-dirty
+        run: npx jsr publish --allow-dirty
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
@@ -108,4 +102,4 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci --prefer-offline
-      - run: npm publish --provenance --access public --dry-run
+      - run: npm publish --provenance --access public
