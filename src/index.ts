@@ -1,7 +1,8 @@
-import countdownCss from './components/countdown.css?inline';
+import countdownCss from './components/countdown/countdown.css?inline';
 import { loader } from './loader.ts';
 import { styler } from './styler.ts';
-export { Countdown } from './components/countdown.ts';
+export { Countdown } from './components/countdown/countdown.ts';
+import zineCss from './components/zine/zine.css?inline';
 
 export const xanadu = () => {
   globalThis.addEventListener('DOMContentLoaded', () => {
@@ -11,6 +12,8 @@ export const xanadu = () => {
      * */
     loader('x-countdown', 'Countdown');
     styler('x-countdown', countdownCss);
+    loader('x-zine', 'Zine');
+    styler('x-zine', zineCss);
   });
 };
 

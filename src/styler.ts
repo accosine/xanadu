@@ -1,4 +1,4 @@
-import { Countdown } from './components/countdown.ts';
+import { Countdown } from './components/countdown/countdown.ts';
 
 type AllCustomElements = Countdown;
 

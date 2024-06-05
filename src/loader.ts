@@ -1,10 +1,11 @@
-import { Countdown } from './components/countdown.ts';
+import { Countdown } from './components/countdown/countdown.ts';
+import { Zine } from './components/zine/zine.ts';
 
-const customElementclasses = { Countdown };
+const customElementclasses = { Countdown, Zine };
 
 export const loader = (
   customElementTag: string,
-  customElementClassName: 'Countdown'
+  customElementClassName: 'Countdown' | 'Zine'
 ) => {
   if (!('customElements' in globalThis.window)) {
     // eslint-disable-next-line no-console
