@@ -1,37 +1,37 @@
-export const zineTemplate = `<div class="stories">
-      <section class="user">
+export const zineTemplate = `<div class="is-stories">
+      <section class="is-user">
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/480/840)"
         ></article>
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/480/841)"
         ></article>
       </section>
-      <section class="user">
+      <section class="is-user">
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/481/840)"
         ></article>
       </section>
-      <section class="user">
+      <section class="is-user">
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/481/841)"
         ></article>
       </section>
-      <section class="user">
+      <section class="is-user">
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/482/840)"
         ></article>
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/482/843)"
         ></article>
         <article
-          class="story"
+          class="is-story"
           style="--bg: url(https://picsum.photos/482/844)"
         ></article>
       </section>

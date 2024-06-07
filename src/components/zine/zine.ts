@@ -72,7 +72,7 @@ export class Zine extends HTMLElement {
     // newDiv.append(button, span, zineStencil);
     // newDiv.append(zineStencil);
 
-    const stories = zineStencil.querySelector('.stories');
+    const stories = zineStencil.querySelector('.is-stories');
     const median = stories.offsetLeft + stories.clientWidth / 2;
 
     const state = {
@@ -106,7 +106,7 @@ export class Zine extends HTMLElement {
             behavior: 'smooth'
           });
         } else {
-          story.classList.add('seen');
+          story.classList.add('is-seen');
           state.current_story = story.previousElementSibling;
         }
       } else if (direction === 'prev') {
@@ -118,7 +118,7 @@ export class Zine extends HTMLElement {
             behavior: 'smooth'
           });
         } else {
-          story.nextElementSibling.classList.remove('seen');
+          story.nextElementSibling.classList.remove('is-seen');
           state.current_story = story.nextElementSibling;
         }
       }
