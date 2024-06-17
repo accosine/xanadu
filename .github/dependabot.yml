@@ -28,7 +28,9 @@ updates:
           - 'storybook'
       eslint:
         patterns:
+          - '@eslint/js'
           - 'eslint*'
+          - 'typescript-eslint'
       stylelint:
         patterns:
           - 'stylelint*'
