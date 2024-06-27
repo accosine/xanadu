@@ -17,6 +17,7 @@ coverage
 
 # tests
 test-results
+src/components/*-snapshots/*-darwin.png
 
 # nyc test coverage
 .nyc_output

@@ -1,11 +1,13 @@
-const ZERO = 0;
-const ONE = 1;
-const TWO = 2;
-const THOUSAND = 1000;
-const MILLISECONDS = 1000;
-const SECONDS = 60;
-const MINUTES = 60;
-const HOURS = 24;
+import {
+  HOURS,
+  MILLISECONDS,
+  MINUTES,
+  ONE,
+  SECONDS,
+  THOUSAND,
+  TWO,
+  ZERO
+} from '../constants.ts';
 
 /**
  * A class to represent the StopWatch element
@@ -26,6 +28,16 @@ export class Countdown extends HTMLElement {
    */
   static get observedAttributes(): string[] {
     return ['days', 'hours', 'minutes', 'seconds'];
+  }
+
+  /**
+   * Span element which will be rendered in the shadow DOM
+   */
+  static getTemplate(countdown: string): HTMLSpanElement {
+    const span = document.createElement('span');
+    span.setAttribute('part', 'countdown');
+    span.append(countdown);
+    return span;
   }
 
   /**
@@ -56,13 +68,14 @@ export class Countdown extends HTMLElement {
    * Setup when the compontent was mounted into the DOM
    */
   connectedCallback() {
-    const renderTemplate = this.#getTemplate({
+    const countdown = this.#buildCountdown({
       hasDays: Object.create(null),
       hasHours: Object.create(null),
       hasMinutes: Object.create(null),
       hasSeconds: Object.create(null)
     });
-    this.#shadowRoot.replaceChildren(renderTemplate);
+
+    this.#shadowRoot.replaceChildren(Countdown.getTemplate(countdown));
 
     // Start the timer
     this.#tick();
@@ -152,7 +165,7 @@ export class Countdown extends HTMLElement {
     return [remainingDays, remainingHours, remainingMinutes, remainingSeconds];
   }
 
-  #getTemplate({
+  #buildCountdown({
     hasDays,
     hasHours,
     hasMinutes,
@@ -189,14 +202,13 @@ export class Countdown extends HTMLElement {
   #tick() {
     const now = Date.now();
     if (now - this.#lastrender > THOUSAND && this.#remainingTimeInMs > ZERO) {
-      const renderTemplate = this.#getTemplate({
+      const countdown = this.#buildCountdown({
         hasDays: this.getAttribute('days'),
         hasHours: this.getAttribute('hours'),
         hasMinutes: this.getAttribute('minutes'),
         hasSeconds: this.getAttribute('seconds')
       });
-
-      this.#shadowRoot.replaceChildren(renderTemplate);
+      this.#shadowRoot.replaceChildren(Countdown.getTemplate(countdown));
       this.#lastrender = now;
     }
 
