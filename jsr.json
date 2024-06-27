@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "exports": "./mod.ts",
   "publish": {
-    "include": ["LICENSE", "README.md", "./mod.ts", "src/components/*.ts"]
+    "include": [
+      "LICENSE",
+      "README.md",
+      "./mod.ts",
+      "src/components/*.ts",
+      "src/constants.ts"
+    ]
   }
 }
