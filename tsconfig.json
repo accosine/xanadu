@@ -22,5 +22,5 @@
     "checkJs": true
   },
   "include": ["src/**/*.ts", "declaration.d.ts", "development.ts", "mod.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/**/*.spec.ts"]
 }
