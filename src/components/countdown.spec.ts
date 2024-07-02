@@ -25,6 +25,10 @@ test('Countdown variants match screenshots', async ({ page }) => {
     .locator('x-countdown')
     .nth(ONE);
 
-  await expect(customElementCountdownRegularColor).toHaveScreenshot();
-  await expect(customElementCountdownOddballColor).toHaveScreenshot();
+  await expect(customElementCountdownRegularColor).toHaveScreenshot({
+    mask: [customElementCountdownRegularColor.locator('.seconds').first()]
+  });
+  await expect(customElementCountdownOddballColor).toHaveScreenshot({
+    mask: [customElementCountdownOddballColor.locator('.seconds').first()]
+  });
 });
