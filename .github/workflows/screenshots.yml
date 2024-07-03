@@ -8,7 +8,7 @@ jobs:
     name: 🎭 Re-Generate Test Screenshots
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.45.1
+      image: mcr.microsoft.com/playwright:v${{ vars.PLAYWRIGHT_VERSION }}
     strategy:
       fail-fast: false
     steps:
