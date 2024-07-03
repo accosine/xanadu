@@ -167,7 +167,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 👩‍🔬 Test with Playwright 🎭
-        run: HOME=/root npx playwright test --project=${{ matrix.project }}
+        run: HOME=/root npx playwright test --project="${{ matrix.project }}"
 
       - name: 🆙 Upload test results
         if: always()
