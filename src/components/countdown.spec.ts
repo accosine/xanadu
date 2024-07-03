@@ -1,4 +1,5 @@
 import { expect, test } from '../../e2e/baseFixtures.ts';
+import AxeBuilder from '@axe-core/playwright';
 import { ONE } from '../constants.ts';
 import type { Page } from '@playwright/test';
 
@@ -30,5 +31,14 @@ test('Countdown variants match screenshots', async ({ page }) => {
   });
   await expect(customElementCountdownOddballColor).toHaveScreenshot({
     mask: [customElementCountdownOddballColor.locator('.seconds').first()]
+  });
+});
+
+test.describe('Countdown', () => {
+  test('should not have any automatically detectable accessibility issues', async ({
+    page
+  }) => {
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
   });
 });
