@@ -32,6 +32,7 @@ export default defineConfig({
     env: {
       USE_BABEL_PLUGIN_ISTANBUL: '1'
     },
-    port: 5173
+    port: 5173,
+    reuseExistingServer: !process.env.CI
   }
 });
