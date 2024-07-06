@@ -9,15 +9,26 @@
     <script type="module" src="./development.ts"></script>
   </head>
   <body>
-    <h1>Vite + Web Components</h1>
-    <x-countdown days="2" hours="3" minutes="5" seconds="7"></x-countdown>
-    <x-countdown
-      class="oddball"
-      days="3"
-      hours="4"
-      minutes="6"
-      seconds="8"
-    ></x-countdown>
-    <x-countdown days="4" hours="5" minutes="7" seconds="9"></x-countdown>
+    <header>
+      <h1>Vite + Web Components</h1>
+    </header>
+    <main>
+      <x-countdown days="2" hours="3" minutes="5" seconds="7"></x-countdown>
+      <x-countdown
+        class="viapart"
+        days="3"
+        hours="4"
+        minutes="6"
+        seconds="8"
+      ></x-countdown>
+      <x-countdown days="4" hours="5" minutes="7" seconds="9"></x-countdown>
+      <x-countdown
+        class="viacustomproperty"
+        days="3"
+        hours="4"
+        minutes="6"
+        seconds="8"
+      ></x-countdown>
+    </main>
   </body>
 </html>
