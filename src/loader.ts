@@ -18,5 +18,5 @@ export const loader = (
     console.warn(`${customElementTag} already registered`);
     return;
   }
-  customElementclasses[customElementClassName].register();
+  customElementclasses[customElementClassName].register(customElementTag);
 };

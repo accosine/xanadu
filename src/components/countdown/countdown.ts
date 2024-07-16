@@ -1,11 +1,17 @@
-const ZERO = 0;
-const ONE = 1;
-const TWO = 2;
-const THOUSAND = 1000;
-const MILLISECONDS = 1000;
-const SECONDS = 60;
-const MINUTES = 60;
-const HOURS = 24;
+import type {
+  DigitsConfigTupleType,
+  GetDigitsConfigType
+} from './countdown.types.ts';
+import {
+  HOURS,
+  MILLISECONDS,
+  MINUTES,
+  ONE,
+  SECONDS,
+  THOUSAND,
+  TWO,
+  ZERO
+} from '../../constants.ts';
 
 /**
  * A class to represent the StopWatch element
@@ -26,6 +32,26 @@ export class Countdown extends HTMLElement {
    */
   static get observedAttributes(): string[] {
     return ['days', 'hours', 'minutes', 'seconds'];
+  }
+
+  /**
+   * Span element which will be rendered in the shadow DOM
+   */
+  static getTemplate({
+    content,
+    tagType,
+    className
+  }: {
+    content: HTMLElement | string;
+    tagType: string;
+    className?: string;
+  }): HTMLSpanElement {
+    const span = document.createElement(tagType);
+    if (className) {
+      span.setAttribute('class', className);
+    }
+    span.append(content);
+    return span;
   }
 
   /**
@@ -56,13 +82,14 @@ export class Countdown extends HTMLElement {
    * Setup when the compontent was mounted into the DOM
    */
   connectedCallback() {
-    const renderTemplate = this.#getTemplate({
+    const countdown = this.#buildCountdown({
       hasDays: Object.create(null),
       hasHours: Object.create(null),
       hasMinutes: Object.create(null),
       hasSeconds: Object.create(null)
     });
-    this.#shadowRoot.replaceChildren(renderTemplate);
+
+    this.#shadowRoot.replaceChildren(countdown);
 
     // Start the timer
     this.#tick();
@@ -152,7 +179,60 @@ export class Countdown extends HTMLElement {
     return [remainingDays, remainingHours, remainingMinutes, remainingSeconds];
   }
 
-  #getTemplate({
+  static wrapDigitsInTag(
+    elements:
+      | [tagType: string, className: string, content: string][]
+      | undefined,
+    wrapper: HTMLElement
+  ): HTMLElement {
+    if (!elements) {
+      wrapper.append(document.createTextNode('00:00:00:00'));
+      return wrapper;
+    }
+    for (const [index, element] of elements.entries()) {
+      const [tagType, className, content] = element;
+      wrapper.append(Countdown.getTemplate({ className, content, tagType }));
+      if (index + ONE < elements.length) {
+        wrapper.append(Countdown.getTemplate({ content: ':', tagType }));
+      }
+    }
+    return wrapper;
+  }
+
+  static getDigitsConfig({
+    days,
+    hasDays,
+    hasHours,
+    hasMinutes,
+    hasSeconds,
+    hours,
+    minutes,
+    seconds
+  }: GetDigitsConfigType): [string, string, string][] | undefined {
+    const daysConfig: DigitsConfigTupleType = ['span', 'days', days];
+    const hoursConfig: DigitsConfigTupleType = ['span', 'hours', hours];
+    const minutesConfig: DigitsConfigTupleType = ['span', 'minutes', minutes];
+    const secondsConfig: DigitsConfigTupleType = ['span', 'seconds', seconds];
+    switch (true) {
+      case Boolean(hasDays): {
+        return [daysConfig, hoursConfig, minutesConfig, secondsConfig];
+      }
+      case Boolean(hasHours): {
+        return [hoursConfig, minutesConfig, secondsConfig];
+      }
+      case Boolean(hasMinutes): {
+        return [minutesConfig, secondsConfig];
+      }
+      case Boolean(hasSeconds): {
+        return [secondsConfig];
+      }
+      default: {
+        return global.undefined;
+      }
+    }
+  }
+
+  #buildCountdown({
     hasDays,
     hasHours,
     hasMinutes,
@@ -167,36 +247,37 @@ export class Countdown extends HTMLElement {
       (number) => String(number).padStart(TWO, '0')
     );
 
-    switch (true) {
-      case Boolean(hasDays): {
-        return `${days}:${hours}:${minutes}:${seconds}`;
-      }
-      case Boolean(hasHours): {
-        return `${hours}:${minutes}:${seconds}`;
-      }
-      case Boolean(hasMinutes): {
-        return `${minutes}:${seconds}`;
-      }
-      case Boolean(hasSeconds): {
-        return `${seconds}`;
-      }
-      default: {
-        return '00:00:00:00';
-      }
+    const wrapperSpan = document.createElement('span');
+    wrapperSpan.setAttribute('part', 'countdown');
+    const digitsConfig = Countdown.getDigitsConfig({
+      days,
+      hasDays,
+      hasHours,
+      hasMinutes,
+      hasSeconds,
+      hours,
+      minutes,
+      seconds
+    });
+    if (digitsConfig?.length === ZERO) {
+      return wrapperSpan;
     }
+    if (!digitsConfig) {
+      return wrapperSpan;
+    }
+    return Countdown.wrapDigitsInTag(digitsConfig, wrapperSpan);
   }
 
   #tick() {
     const now = Date.now();
     if (now - this.#lastrender > THOUSAND && this.#remainingTimeInMs > ZERO) {
-      const renderTemplate = this.#getTemplate({
+      const countdown = this.#buildCountdown({
         hasDays: this.getAttribute('days'),
         hasHours: this.getAttribute('hours'),
         hasMinutes: this.getAttribute('minutes'),
         hasSeconds: this.getAttribute('seconds')
       });
-
-      this.#shadowRoot.replaceChildren(renderTemplate);
+      this.#shadowRoot.replaceChildren(countdown);
       this.#lastrender = now;
     }
 

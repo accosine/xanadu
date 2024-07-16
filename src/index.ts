@@ -5,12 +5,12 @@ export { Countdown } from './components/countdown/countdown.ts';
 import zineCss from './components/zine/zine.css?inline';
 
 export const xanadu = () => {
+  loader('x-countdown', 'Countdown');
   globalThis.addEventListener('DOMContentLoaded', () => {
     /**
      * Fire the web component loader, so custom elements can receive styling
      * from the outside.
      * */
-    loader('x-countdown', 'Countdown');
     styler('x-countdown', countdownCss);
     loader('x-zine', 'Zine');
     styler('x-zine', zineCss);

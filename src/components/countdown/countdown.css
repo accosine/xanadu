@@ -1,5 +1,19 @@
-@import url('../../styles/other.css');
-
 :host {
-  color: blue;
+  /* Define all used colors */
+  --_bg-light-countdown: white;
+  --_bg-dark-countdown: black;
+
+  /* Set pseudo private custom properties for colors */
+  --_bg-countdown: var(--_bg-light-countdown);
+  --_color-countdown: var(--_bg-dark-countdown);
+
+  /* Use pseudo private variables as fallback,
+  use global color variables from outside as default */
+  background-color: var(--bg-countdown, var(--_bg-countdown));
+  color: var(--color-countdown, var(--_color-countdown));
+
+  @media (prefers-color-scheme: dark) {
+    --_bg-countdown: var(--_bg-dark-countdown);
+    --_color-countdown: var(--_bg-light-countdown);
+  }
 }

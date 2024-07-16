@@ -1,5 +1,35 @@
 html {
-  background-color: yellow;
+  --_bg-light-html: yellow;
+  --_bg-dark-html: blue;
+  --_bg-html: var(--_bg-light-html);
+
+  background-color: var(--_bg-html);
+
+  @media (prefers-color-scheme: dark) {
+    --_bg-html: var(--_bg-dark-html);
+  }
+}
+
+h1 {
+  --_color-light-h1: black;
+  --_color-dark-h1: white;
+  --_color-h1: var(--_color-light-h1);
+
+  color: var(--_color-h1);
+
+  @media (prefers-color-scheme: dark) {
+    --_color-h1: var(--_color-dark-h1);
+  }
+}
+
+x-countdown.viapart::part(countdown) {
+  background-color: rgb(82, 57, 126);
+  color: white;
+}
+
+x-countdown.viacustomproperty {
+  --bg-countdown: rgb(255, 140, 0);
+  --color-countdown: rgb(47, 35, 14);
 }
 
 body {
