@@ -31,13 +31,3 @@ x-countdown.viacustomproperty {
   --bg-countdown: rgb(255, 140, 0);
   --color-countdown: rgb(47, 35, 14);
 }
-
-body {
-  min-block-size: 100vh;
-  display: grid;
-  place-items: center;
-  font-family: system-ui;
-  margin: 0;
-  background: hsl(200 15% 93%);
-}
-/* comment */
