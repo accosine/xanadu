@@ -8,13 +8,11 @@ export const loader = (
   customElementClassName: 'Countdown' | 'Zine'
 ) => {
   if (!('customElements' in globalThis.window)) {
-    // eslint-disable-next-line no-console
     console.warn('No Custom Elements available');
     return;
   }
 
   if (customElements.get(customElementTag)) {
-    // eslint-disable-next-line no-console
     console.warn(`${customElementTag} already registered`);
     return;
   }

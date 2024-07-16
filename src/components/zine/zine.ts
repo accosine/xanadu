@@ -54,7 +54,6 @@ export class Zine extends HTMLElement {
       testTemplate,
       zineTemplate
     ]);
-    const newDiv = document.createElement('div');
 
     const span = asdf.querySelector('#hi');
     const button = asdf.querySelector('#aloha');
@@ -71,9 +70,6 @@ export class Zine extends HTMLElement {
     button.addEventListener('click', Zine.#qwerEventDispatcher(span));
     span.addEventListener('myEvent', Zine.#myEventHandler(span));
 
-    // newDiv.append(button, span, zineStencil);
-    // newDiv.append(zineStencil);
-
     const stories = zineStencil.querySelector('.is-stories') as HTMLElement;
     const median = stories.offsetLeft + stories.clientWidth / 2;
 
@@ -89,26 +85,28 @@ export class Zine extends HTMLElement {
         return;
       }
 
-      if (target.nodeName !== 'ARTICLE') return;
+      if (target.nodeName !== 'ARTICLE') {
+        return;
+      }
       navigateStories(e.clientX > median ? 'next' : 'prev');
     });
 
     zineStencil.addEventListener('keydown', ({ key }) => {
-      if (key !== 'ArrowDown' || key !== 'ArrowUp')
+      if (key !== 'ArrowDown' || key !== 'ArrowUp') {
         navigateStories(key === 'ArrowDown' ? 'next' : 'prev');
+      }
     });
 
-    // eslint-disable-next-line max-statements
     const navigateStories = (direction) => {
       const story = state.current_story;
       const lastItemInUserStory = story.parentNode.firstElementChild;
       const firstItemInUserStory = story.parentNode.lastElementChild;
       const hasNextUserStory = story.parentElement.nextElementSibling;
-      const hasPrevUserStory = story.parentElement.previousElementSibling;
+      const hasPreviousUserStory = story.parentElement.previousElementSibling;
 
       if (direction === 'next') {
-        if (lastItemInUserStory === story && !hasNextUserStory) return;
-        else if (lastItemInUserStory === story && hasNextUserStory) {
+        if (lastItemInUserStory === story && !hasNextUserStory) {
+        } else if (lastItemInUserStory === story && hasNextUserStory) {
           state.current_story =
             story.parentElement.nextElementSibling.lastElementChild;
           story.parentElement.nextElementSibling.scrollIntoView({
@@ -119,8 +117,8 @@ export class Zine extends HTMLElement {
           state.current_story = story.previousElementSibling;
         }
       } else if (direction === 'prev') {
-        if (firstItemInUserStory === story && !hasPrevUserStory) return;
-        else if (firstItemInUserStory === story && hasPrevUserStory) {
+        if (firstItemInUserStory === story && !hasPreviousUserStory) {
+        } else if (firstItemInUserStory === story && hasPreviousUserStory) {
           state.current_story =
             story.parentElement.previousElementSibling.firstElementChild;
           story.parentElement.previousElementSibling.scrollIntoView({
