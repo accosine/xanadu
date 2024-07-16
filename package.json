@@ -54,7 +54,7 @@
     "eslint-plugin-unicorn": "54.0.0",
     "eslint-plugin-wc": "2.1.0",
     "globals": "15.8.0",
-    "jsr": "0.13.0",
+    "jsr": "0.13.1",
     "lightningcss": "1.25.1",
     "lit": "3.1.4",
     "npm-check-updates": "16.14.20",
