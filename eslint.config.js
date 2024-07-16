@@ -11,11 +11,9 @@ export default [
   {
     files: ['src/**/*.{js,ts}', 'stories/**/*.{js,ts}'],
     languageOptions: { globals: globals.browser },
-    plugins: {
-      storybook
-    },
+    plugins: { storybook },
     rules: {
-      'no-ternary': 'error',
+      'no-ternary': 'off',
       'no-undef': 'off',
       'one-var': 'off',
       'sort-imports': ['error', { ignoreCase: true }]
@@ -23,24 +21,20 @@ export default [
   },
   eslintPluginUnicorn.configs['flat/recommended'],
   {
-    rules: {
-      'unicorn/better-regex': 'warn'
-    }
+    rules: { 'unicorn/better-regex': 'warn' }
   },
   // 👇 Replace with "wc.configs.all" after it
-  // has become compatible with flat config
+  // has become truly compatible with flat config
   {
-    ...wc.configs.all,
-    plugins: {
-      // wc: fixupPluginRules(wc)
-      wc
-    },
+    // ...wc.configs.all,
+    plugins: { wc },
     rules: {
-      // Recommended
+      // wc - recommended
       'wc/no-constructor-attributes': 'error',
       'wc/no-invalid-element-name': 'error',
       'wc/no-self-class': 'error',
-      // Best practice
+
+      // wc - best practice
       'wc/attach-shadow-constructor': 'error',
       'wc/guard-super-call': 'error',
       'wc/no-child-traversal-in-attributechangedcallback': 'error',
@@ -51,7 +45,8 @@ export default [
       'wc/no-invalid-extends': 'error',
       'wc/no-typos': 'error',
       'wc/require-listener-teardown': 'error',
-      // Preference/convention
+
+      // wc - preference/convention
       'wc/define-tag-after-class-definition': 'off',
       'wc/expose-class-on-global': 'off',
       'wc/file-name-matches-element': 'error',
