@@ -1,3 +1,5 @@
+/* eslint-disable max-statements */
+/* eslint-disable max-lines-per-function */
 import { zineTemplate } from './templates.ts';
 const testTemplate = `<span id="hi">I am still empty</span> <button id='aloha'>CLICK ME</button>`;
 
@@ -47,7 +49,7 @@ export class Zine extends HTMLElement {
     return stencils;
   }
 
-  static #render() {
+  static #render(): DocumentFragment {
     const [asdf, zineStencil] = Zine.#cloneTemplates([
       testTemplate,
       zineTemplate
@@ -72,16 +74,22 @@ export class Zine extends HTMLElement {
     // newDiv.append(button, span, zineStencil);
     // newDiv.append(zineStencil);
 
-    const stories = zineStencil.querySelector('.is-stories');
+    const stories = zineStencil.querySelector('.is-stories') as HTMLElement;
     const median = stories.offsetLeft + stories.clientWidth / 2;
 
     const state = {
-      current_story: stories.firstElementChild.lastElementChild
+      current_story: stories.firstElementChild?.lastElementChild
     };
 
     stories.addEventListener('click', (e) => {
-      if (e.target.nodeName !== 'ARTICLE') return;
+      const { target } = e;
+      // Note e.g. XHR requests can be event targets, no nodeName
+      if (!(target instanceof HTMLElement)) {
+        console.error('asdf');
+        return;
+      }
 
+      if (target.nodeName !== 'ARTICLE') return;
       navigateStories(e.clientX > median ? 'next' : 'prev');
     });
 
@@ -90,6 +98,7 @@ export class Zine extends HTMLElement {
         navigateStories(key === 'ArrowDown' ? 'next' : 'prev');
     });
 
+    // eslint-disable-next-line max-statements
     const navigateStories = (direction) => {
       const story = state.current_story;
       const lastItemInUserStory = story.parentNode.firstElementChild;

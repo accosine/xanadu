@@ -16,7 +16,8 @@ export default [
       'no-ternary': 'off',
       'no-undef': 'off',
       'one-var': 'off',
-      'sort-imports': ['error', { ignoreCase: true }]
+      'sort-imports': ['error', { ignoreCase: true }],
+      'no-console': ['error', { allow: ['warn', 'error'] }]
     }
   },
   eslintPluginUnicorn.configs['flat/recommended'],
