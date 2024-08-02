@@ -45,7 +45,7 @@
     "@storybook/test": "8.2.6",
     "@storybook/web-components": "8.2.6",
     "@storybook/web-components-vite": "8.2.6",
-    "browserslist": "4.23.2",
+    "browserslist": "4.23.3",
     "eslint": "9.8.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-n": "17.10.1",
