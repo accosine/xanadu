@@ -26,6 +26,8 @@
     "lint:slowtypes": "jsr publish --dry-run --allow-dirty",
     "storybook": "storybook dev -p 6006",
     "test": "playwright test",
+    "test:regenerate": "playwright test --update-snapshots",
+    "test:changed": "playwright test --only-changed",
     "typecheck": "tsc",
     "ok": "npm run typecheck && npm run lint && npm run test && npm run coverage && npm run build",
     "format": "prettier --write src stories",
