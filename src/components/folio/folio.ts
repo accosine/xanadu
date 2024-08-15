@@ -1,9 +1,11 @@
 import { folioTemplate } from './templates.ts';
 
 /**
- * A class to represent the Zine web component
+ * A class to represent the Folio web component
  */
 export class Folio extends HTMLElement {
+  imageInput: HTMLInputElement | undefined;
+  previewImage: HTMLImageElement | null | undefined;
   // eslint-disable-next-line wc/no-constructor, max-statements
   constructor() {
     super();
@@ -15,28 +17,14 @@ export class Folio extends HTMLElement {
       this.attachShadow({ mode: 'open' }).append(stencil);
     }
     if (this.shadowRoot) {
-      const imageInput = this.shadowRoot.querySelector(
+      this.imageInput = this.shadowRoot.querySelector(
         '#file'
       ) as HTMLInputElement;
-      let previewImage = this.shadowRoot.querySelector('img');
-      if (!previewImage) {
-        previewImage = document.createElement('img');
+      this.previewImage = this.shadowRoot.querySelector('img');
+      if (!this.previewImage) {
+        this.previewImage = document.createElement('img');
       }
       const labelElement = this.shadowRoot.querySelector('label');
-
-      const previewSelectedImage = () => {
-        const [file] = imageInput.files || [];
-        if (file) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.addEventListener('load', (event) => {
-            previewImage.src = event.target.result;
-          });
-          labelElement.after(previewImage);
-          labelElement.remove();
-        }
-      };
-      imageInput.addEventListener('change', previewSelectedImage);
     }
   }
 
@@ -50,6 +38,35 @@ export class Folio extends HTMLElement {
   addStylesheet(styles: CSSStyleSheet) {
     if (styles && this.shadowRoot) {
       this.shadowRoot.adoptedStyleSheets = [styles];
+    }
+  }
+
+  connectedCallback() {
+    this.imageInput?.addEventListener('change', (event) => {
+      this.previewSelectedImage();
+    });
+  }
+
+  disconnectedCallback() {
+    this.imageInput?.removeEventListener('change', (event) => {
+      this.previewSelectedImage();
+    });
+  }
+
+  previewSelectedImage() {
+    const labelElement = this.shadowRoot.querySelector('label');
+    const imageInput = this.shadowRoot.querySelector(
+      '#file'
+    ) as HTMLInputElement;
+    const [file] = imageInput.files || [];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.addEventListener('load', (event) => {
+        this.previewImage.src = event.target.result;
+      });
+      labelElement.after(this.previewImage);
+      labelElement.remove();
     }
   }
 }
