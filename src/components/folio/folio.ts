@@ -6,7 +6,8 @@ import { folioTemplate } from './templates.ts';
 export class Folio extends HTMLElement {
   imageInput: HTMLInputElement | undefined;
   previewImage: HTMLImageElement | null | undefined;
-  // eslint-disable-next-line wc/no-constructor, max-statements
+  labelElement: HTMLLabelElement | null | undefined;
+
   constructor() {
     super();
     if (!this.shadowRoot) {
@@ -16,6 +17,10 @@ export class Folio extends HTMLElement {
       const stencil = tmpl.content.cloneNode(true) as DocumentFragment;
       this.attachShadow({ mode: 'open' }).append(stencil);
     }
+    this.prepareElements();
+  }
+
+  prepareElements() {
     if (this.shadowRoot) {
       this.imageInput = this.shadowRoot.querySelector(
         '#file'
@@ -24,7 +29,7 @@ export class Folio extends HTMLElement {
       if (!this.previewImage) {
         this.previewImage = document.createElement('img');
       }
-      const labelElement = this.shadowRoot.querySelector('label');
+      this.labelElement = this.shadowRoot.querySelector('label');
     }
   }
 
@@ -42,19 +47,22 @@ export class Folio extends HTMLElement {
   }
 
   connectedCallback() {
-    this.imageInput?.addEventListener('change', (event) => {
+    this.imageInput?.addEventListener('change', () => {
       this.previewSelectedImage();
     });
   }
 
   disconnectedCallback() {
-    this.imageInput?.removeEventListener('change', (event) => {
+    this.imageInput?.removeEventListener('change', () => {
       this.previewSelectedImage();
     });
   }
 
   previewSelectedImage() {
-    const labelElement = this.shadowRoot.querySelector('label');
+    Folio.assert(
+      this.shadowRoot instanceof ShadowRoot,
+      'A ShadowRoot needs to be declared in the DOM.'
+    );
     const imageInput = this.shadowRoot.querySelector(
       '#file'
     ) as HTMLInputElement;
@@ -63,10 +71,28 @@ export class Folio extends HTMLElement {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.addEventListener('load', (event) => {
+        Folio.assert(
+          this.previewImage instanceof HTMLImageElement,
+          'A ShadowRoot needs to be declared in the DOM.'
+        );
+        Folio.assert(
+          typeof event.target?.result === 'string',
+          'Event.target.result needs to be a string.'
+        );
         this.previewImage.src = event.target.result;
       });
-      labelElement.after(this.previewImage);
-      labelElement.remove();
+      Folio.assert(
+        this.labelElement instanceof HTMLLabelElement,
+        'A ShadowRoot needs to be declared in the DOM.'
+      );
+      this.labelElement.after(this.previewImage as Node);
+      this.labelElement.remove();
+    }
+  }
+
+  static assert(condition: boolean, message: string): asserts condition {
+    if (!condition) {
+      throw new Error(message);
     }
   }
 }

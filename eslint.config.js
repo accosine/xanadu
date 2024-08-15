@@ -52,7 +52,7 @@ export default [
       'wc/file-name-matches-element': 'error',
       'wc/guard-define-call': 'error',
       'wc/max-elements-per-file': 'error',
-      'wc/no-constructor': 'error',
+      'wc/no-constructor': 'warn',
       'wc/no-exports-with-element': 'error',
       'wc/no-method-prefixed-with-on': 'error',
       'wc/tag-name-matches-class': 'error'
