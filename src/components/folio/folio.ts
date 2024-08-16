@@ -1,49 +1,22 @@
 import { folioTemplate } from './templates.ts';
+import Xanadu from '../../xanadu.ts';
 
 /**
  * A class to represent the Folio web component
  */
-export class Folio extends HTMLElement {
+export class Folio extends Xanadu {
   imageInput: HTMLInputElement | undefined;
   previewImage: HTMLImageElement | null | undefined;
   labelElement: HTMLLabelElement | null | undefined;
 
+  // eslint-disable-next-line wc/no-constructor
   constructor() {
     super();
     if (!this.shadowRoot) {
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = folioTemplate({});
-      const tmpl = wrapper.querySelector('template') as HTMLTemplateElement;
-      const stencil = tmpl.content.cloneNode(true) as DocumentFragment;
-      this.attachShadow({ mode: 'open' }).append(stencil);
+      const template = Folio.prepareTemplate(folioTemplate({}));
+      this.attachShadow({ mode: 'open' }).append(template);
     }
     this.prepareElements();
-  }
-
-  prepareElements() {
-    if (this.shadowRoot) {
-      this.imageInput = this.shadowRoot.querySelector(
-        '#file'
-      ) as HTMLInputElement;
-      this.previewImage = this.shadowRoot.querySelector('img');
-      if (!this.previewImage) {
-        this.previewImage = document.createElement('img');
-      }
-      this.labelElement = this.shadowRoot.querySelector('label');
-    }
-  }
-
-  /**
-   * Web component can be registered with as `<x-zine>`
-   */
-  static register(tagName?: string) {
-    globalThis.window.customElements.define(tagName || 'x-folio', Folio);
-  }
-
-  addStylesheet(styles: CSSStyleSheet) {
-    if (styles && this.shadowRoot) {
-      this.shadowRoot.adoptedStyleSheets = [styles];
-    }
   }
 
   connectedCallback() {
@@ -56,6 +29,21 @@ export class Folio extends HTMLElement {
     this.imageInput?.removeEventListener('change', () => {
       this.previewSelectedImage();
     });
+  }
+
+  prepareElements() {
+    Folio.assert(
+      this.shadowRoot instanceof ShadowRoot,
+      'A ShadowRoot needs to be declared in the DOM.'
+    );
+    this.imageInput = this.shadowRoot.querySelector(
+      '#file'
+    ) as HTMLInputElement;
+    this.previewImage = this.shadowRoot.querySelector('img');
+    if (!this.previewImage) {
+      this.previewImage = document.createElement('img');
+    }
+    this.labelElement = this.shadowRoot.querySelector('label');
   }
 
   previewSelectedImage() {
@@ -87,12 +75,6 @@ export class Folio extends HTMLElement {
       );
       this.labelElement.after(this.previewImage as Node);
       this.labelElement.remove();
-    }
-  }
-
-  static assert(condition: boolean, message: string): asserts condition {
-    if (!condition) {
-      throw new Error(message);
     }
   }
 }
