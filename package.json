@@ -54,7 +54,7 @@
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-storybook": "0.8.0",
     "eslint-plugin-unicorn": "55.0.0",
-    "eslint-plugin-wc": "2.1.0",
+    "eslint-plugin-wc": "2.1.1",
     "globals": "15.9.0",
     "jsr": "0.13.1",
     "lightningcss": "1.26.0",
