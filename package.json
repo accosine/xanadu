@@ -59,7 +59,7 @@
     "jsr": "0.13.1",
     "lightningcss": "1.26.0",
     "lit": "3.2.0",
-    "npm-check-updates": "17.0.6",
+    "npm-check-updates": "17.1.0",
     "nyc": "17.0.0",
     "prettier": "3.3.3",
     "storybook": "8.2.9",
