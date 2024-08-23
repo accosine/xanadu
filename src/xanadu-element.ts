@@ -1,4 +1,4 @@
-export class Xanadu extends HTMLElement {
+export class XanaduElement extends HTMLElement {
   addStylesheet(styles: CSSStyleSheet) {
     if (styles && this.shadowRoot) {
       this.shadowRoot.adoptedStyleSheets = [styles];
@@ -23,4 +23,4 @@ export class Xanadu extends HTMLElement {
   }
 }
 
-export default Xanadu;
+export default XanaduElement;

@@ -1,10 +1,10 @@
 import { folioTemplate } from './templates.ts';
-import Xanadu from '../../xanadu.ts';
+import XanaduElement from '../../xanadu-element.ts';
 
 /**
  * A class to represent the Folio web component
  */
-export class Folio extends Xanadu {
+export class Folio extends XanaduElement {
   imageInput: HTMLInputElement | undefined;
   previewImage: HTMLImageElement | null | undefined;
   labelElement: HTMLLabelElement | null | undefined;
