@@ -129,7 +129,7 @@ export class Countdown extends HTMLElement {
   }
 
   static zeroIfNegative(number: number): number {
-    return number < ONE ? ONE : number;
+    return number < ONE ? ZERO : number;
   }
 
   #calculateRemainingTimeInMs() {
