@@ -1,0 +1,73 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Xanadu Web Components" />
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # Xanadu Web Components
+
+    Frameworkless web components for media creation and publishing - or, a vision in a dream. A Fragment.
+
+  </div>
+  <div className="sb-section">
+    <div className="sb-section-item">
+      <h4 className="sb-section-item-heading">Frameworkless and Lightweight</h4>
+      <p className="sb-section-item-paragraph">Each component is standalone and does not use a framework, providing the lightest experience possible, while still easy to modify to your own needs.</p>
+    </div>
+    <div className="sb-section-item">
+      <h4 className="sb-section-item-heading">Headless</h4>
+      <p className="sb-section-item-paragraph">Use the available styles or bring your own.</p>
+    </div>
+    <div className="sb-section-item">
+      <div>
+        <h4 className="sb-section-item-heading">Rosebud</h4>
+        <p className="sb-section-item-paragraph">🛷</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  {`
+  .sb-container {
+    margin-bottom: 48px;
+  }
+
+  .sb-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .sb-section-title {
+    margin-bottom: 32px;
+  }
+
+  .sb-section a:not(h1 a, h2 a, h3 a) {
+    font-size: 14px;
+  }
+
+  .sb-section-item, .sb-grid-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sb-section-item-heading {
+    padding-top: 20px !important;
+    padding-bottom: 5px !important;
+    margin: 0 !important;
+  }
+  .sb-section-item-paragraph {
+    margin: 0;
+    padding-bottom: 10px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .sb-section {
+      flex-direction: column;
+    }
+
+  `}
+</style>
