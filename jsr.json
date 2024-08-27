@@ -7,7 +7,7 @@
       "LICENSE",
       "README.md",
       "./mod.ts",
-      "src/components/*.ts",
+      "src/components/**/*.ts",
       "src/constants.ts"
     ]
   }
