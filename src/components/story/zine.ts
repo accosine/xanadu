@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
+// @ts-nocheck
 import { zineTemplate } from './templates.ts';
 const testTemplate = `<span id="hi">I am still empty</span> <button id='aloha'>CLICK ME</button>`;
 

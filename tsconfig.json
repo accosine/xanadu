@@ -1,25 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "allowImportingTsExtensions": true,
     "experimentalDecorators": true,
-    "useDefineForClassFields": false,
-    "module": "NodeNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "NodeNext",
     "skipLibCheck": true,
+    "target": "ES2022",
 
     /* Bundler mode */
-    "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
     "isolatedModules": true,
+    "moduleResolution": "NodeNext",
     "noEmit": true,
+    "resolveJsonModule": true,
 
     /* Linting */
-    "strict": true,
+    "checkJs": true,
+    "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "checkJs": true
+    "strict": true
   },
   "include": ["src/**/*.ts", "declaration.d.ts", "development.ts", "mod.ts"],
   "exclude": ["node_modules", "src/**/*.spec.ts"]

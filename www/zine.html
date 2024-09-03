@@ -5,24 +5,32 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Xanadu Zine Web Component</title>
-    <link rel="stylesheet" href="../development.css" />
+    <!-- <link rel="stylesheet" href="../development.css" /> -->
     <script type="module" src="../development.ts"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css"
+    />
   </head>
   <body>
-    <header>
+    <!-- <header>
       <h1>Vite + Web Components</h1>
       <h1 style="position: fixed">Hi Zine Web Component</h1>
-    </header>
+    </header> -->
     <main>
+      <!-- Write HTML just like a web page -->
       <x-zine>
         <template shadowrootmode="open">
           <style>
             :host {
+              height: 100%;
               background-color: brown;
-              display: grid;
-              grid-template-rows: repeat(4, 1fr);
-              grid-template-columns: 1fr 1fr;
-
+              section {
+                display: grid;
+                grid-template-rows: repeat(4, 25%);
+                grid-template-columns: 1fr 1fr;
+                height: 100%;
+              }
               label {
                 position: absolute;
               }
@@ -61,29 +69,136 @@
                 justify-content: center;
               }
               dialog {
+                border: unset;
+                height: 100%;
+                left: 0px;
+                margin: unset;
+                overflow: scroll;
+                padding: unset;
                 position: fixed;
                 top: 0px;
-                left: 0px;
-                border: 0px;
-                padding: 0px;
-                width: 100vw;
-                height: 100vh;
-                /* display: flex;
-                align-items: center;
-                flex-direction: column;
-                justify-content: center; */
+              }
+
+              @page {
+                margin: 0;
+                size: A4;
+              }
+              .sheet {
+                margin: 0;
+                overflow: hidden;
+                position: relative;
+                box-sizing: border-box;
+                page-break-after: always;
+              }
+
+              /** Paper sizes **/
+              dialog.A3 .sheet {
+                width: 297mm;
+                height: 419mm;
+              }
+              dialog.A3.landscape .sheet {
+                width: 420mm;
+                height: 296mm;
+              }
+              dialog.A4 .sheet {
+                width: 210mm;
+                height: 296mm;
+              }
+              dialog.A4.landscape .sheet {
+                width: 297mm;
+                height: 209mm;
+              }
+              dialog.A5 .sheet {
+                width: 148mm;
+                height: 209mm;
+              }
+              dialog.A5.landscape .sheet {
+                width: 210mm;
+                height: 147mm;
+              }
+              dialog.letter .sheet {
+                width: 216mm;
+                height: 279mm;
+              }
+              dialog.letter.landscape .sheet {
+                width: 280mm;
+                height: 215mm;
+              }
+              dialog.legal .sheet {
+                width: 216mm;
+                height: 356mm;
+              }
+              dialog.legal.landscape .sheet {
+                width: 357mm;
+                height: 215mm;
+              }
+
+              /** Padding area **/
+              .sheet.padding-10mm {
+                padding: 10mm;
+              }
+              .sheet.padding-15mm {
+                padding: 15mm;
+              }
+              .sheet.padding-20mm {
+                padding: 20mm;
+              }
+              .sheet.padding-25mm {
+                padding: 25mm;
+              }
+
+              /** For screen preview **/
+              @media screen {
+                dialog {
+                  background: #e0e0e0;
+                }
+                .sheet {
+                  background: white;
+                  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3);
+                  margin: 5mm auto;
+                }
+              }
+
+              /** Fix for Chrome issue #273306 **/
+              @media print {
+                dialog.A3.landscape {
+                  width: 420mm;
+                }
+                dialog.A3,
+                dialog.A4.landscape {
+                  width: 297mm;
+                }
+                dialog.A4,
+                dialog.A5.landscape {
+                  width: 210mm;
+                }
+                dialog.A5 {
+                  width: 148mm;
+                }
+                dialog.letter,
+                dialog.legal {
+                  width: 216mm;
+                }
+                dialog.letter.landscape {
+                  width: 280mm;
+                }
+                dialog.legal.landscape {
+                  width: 357mm;
+                }
               }
             }
           </style>
-          <dialog open>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              accept=".jpg, .jpeg, .png"
-            />
-            <label for="file">Choose a file (Click me)</label>
-            <img id="previewImage" alt="Preview" />
+          <dialog open class="A4">
+            <section class="sheet">
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
+            </section>
           </dialog>
         </template>
       </x-zine>
