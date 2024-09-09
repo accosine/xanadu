@@ -51,7 +51,7 @@ export class Zine extends XanaduElement {
     return ['open'];
   }
 
-  attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
+  attributeChangedCallback(_name: string, _oldValue: string, newValue: string) {
     if (newValue !== null) {
       this.dialog?.show();
     }
