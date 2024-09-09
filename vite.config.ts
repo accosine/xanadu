@@ -1,12 +1,12 @@
-import IstanbulPlugin from 'vite-plugin-istanbul';
+import browserslist from 'browserslist';
+import { browserslistToTargets } from 'lightningcss';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { browserslistToTargets } from 'lightningcss';
-import browserslist from 'browserslist';
+import fs from 'node:fs';
+import IstanbulPlugin from 'vite-plugin-istanbul';
 
 export default defineConfig({
   build: {
-    sourcemap: true,
     // cssMinify: 'lightningcss',
     lib: {
       entry: './src/index.ts',
@@ -15,17 +15,18 @@ export default defineConfig({
     rollupOptions: {
       output: {
         dir: 'dist',
-        preserveModules: true,
-        entryFileNames: () => '[name].js'
+        entryFileNames: () => '[name].js',
+        preserveModules: true
       }
-    }
+    },
+    sourcemap: true
   },
-  css: {
-    transformer: 'lightningcss',
-    lightningcss: {
-      targets: browserslistToTargets(browserslist('>= 0.25%'))
-    }
-  },
+  // css: {
+  //   lightningcss: {
+  //     targets: browserslistToTargets(browserslist('>= 0.25%'))
+  //   },
+  //   transformer: 'lightningcss'
+  // },
   plugins: [
     dts({
       include: ['src', 'declaration.d.ts'],
