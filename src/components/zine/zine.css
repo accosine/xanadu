@@ -1,70 +1,119 @@
+/* stylelint-disable rule-selector-property-disallowed-list */
 :host {
-  color: blue;
-  min-block-size: 100vh;
-  display: grid;
-  place-items: center;
-  font-family: system-ui;
-  margin: 0;
-  background: hsl(200deg 15% 93%);
+  height: 100%;
+  background-color: brown;
 
-  & > .is-stories {
-    inline-size: 100vw;
-    block-size: 100vh;
-    box-shadow:
-      0 5px 2.5px hsl(200deg 95% 3% / 3.7%),
-      0 12px 6.5px hsl(200deg 95% 3% / 5.3%),
-      0 22.5px 13px hsl(200deg 95% 3% / 6.5%),
-      0 40.2px 24px hsl(200deg 95% 3% / 7.7%),
-      0 75.2px 44px hsl(200deg 95% 3% / 9.3%),
-      0 180px 80px hsl(200deg 95% 3% / 13%);
-
-    @media (hover: hover) {
-      border-radius: 3ch;
-    }
-
-    /* desktop constraint */
-    @media (hover: hover) and (width >= 480px) {
-      max-inline-size: 480px;
-      max-block-size: 848px;
-    }
-
-    /* smaller desktop constraint */
-    @media (hover: hover) and (height <= 880px) and (width >= 720px) {
-      max-inline-size: 320px;
-      max-block-size: 568px;
-    }
+  & button {
+    position: fixed;
   }
 
-  & .is-stories {
-    /* asdf */
+  & section {
+    /* display: grid;
+    grid-template-rows: repeat(4, 25%);
+    grid-template-columns: 1fr 1fr; */
+    height: 100%;
+  }
+
+  & .grid {
     display: grid;
-    grid: 1fr / auto-flow 100%;
-    gap: 1ch;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior: contain;
-    touch-action: pan-x;
+    grid-template-rows: repeat(4, 25%);
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
   }
 
-  & .is-user {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    display: grid;
-    grid: [story] 1fr / [story] 1fr;
+  & label {
+    position: absolute;
   }
 
-  & .is-story {
-    grid-area: story;
-    background-size: cover;
-    background-image: var(--bg),
-      linear-gradient(to top, lch(98% 0 0deg), lch(90% 0 0deg));
-    user-select: none;
-    touch-action: manipulation;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1);
+  /* visibility: hidden etc. wont work */
+  & [type='file'] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    border-radius: 0;
+    position: absolute;
+    z-index: -1;
+  }
 
-    &.is-seen {
-      opacity: 0;
-      pointer-events: none;
+  & [type='file']:focus + label {
+    /* keyboard navigation */
+    outline: 1px dotted #000;
+  }
+
+  & [type='file'] + label * {
+    pointer-events: none;
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+
+  & .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  & dialog {
+    border: unset;
+    height: 100%;
+    left: 0;
+    margin: unset;
+    overflow: scroll;
+    padding: unset;
+    position: fixed;
+    top: 0;
+
+    & .sheet {
+      margin: 0;
+      overflow: hidden;
+      border-radius: 0;
+      position: relative;
+      box-sizing: border-box;
+      page-break-after: always;
+    }
+  }
+
+  @page {
+    /* stylelint-disable-next-line csstree/validator */
+    margin: 0;
+    size: a4;
+  }
+
+  /* stylelint-disable-next-line selector-disallowed-list */
+  & .a4 {
+    & .sheet {
+      width: 210mm;
+      height: 296mm;
+    }
+  }
+
+  /** For screen preview **/
+  @media screen {
+    dialog {
+      background: #e0e0e0;
+    }
+
+    .sheet {
+      background: white;
+      box-shadow: 0 0.5mm 2mm rgb(0 0 0 / 30%);
+      margin: 5mm auto;
+    }
+  }
+
+  @media print {
+    /* stylelint-disable-next-line selector-disallowed-list */
+    .a4 {
+      width: 210mm;
+    }
+
+    & button {
+      visibility: hidden;
     }
   }
 }

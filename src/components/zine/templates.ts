@@ -1,39 +1,36 @@
-export const zineTemplate = `<div class="is-stories">
-      <section class="is-user">
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/480/840)"
-        ></article>
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/480/841)"
-        ></article>
-      </section>
-      <section class="is-user">
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/481/840)"
-        ></article>
-      </section>
-      <section class="is-user">
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/481/841)"
-        ></article>
-      </section>
-      <section class="is-user">
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/482/840)"
-        ></article>
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/482/843)"
-        ></article>
-        <article
-          class="is-story"
-          style="--bg: url(https://picsum.photos/482/844)"
-        ></article>
-      </section>
-    </div>
-    `;
+type ZineTemplateType = {
+  css?: string;
+  dsd?: boolean;
+  folioShadowRoot?: string;
+};
+
+export const zineTemplate = ({
+  css = '',
+  dsd = false,
+  folioShadowRoot = ''
+}: ZineTemplateType) => {
+  const styles = css ? `<style>${css}</style>` : '';
+  const shadowrootmode = dsd ? 'shadowrootmode="open"' : '';
+
+  return `<template ${shadowrootmode}>
+          ${styles}
+          <dialog class="a4">
+            <section class="sheet">
+              <button>X</button>
+              <div class="grid">
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+                <x-folio>${folioShadowRoot}</x-folio>
+              </div>
+            </section>
+          </dialog>
+        </template>
+        `;
+};
+
+export default zineTemplate;

@@ -8,30 +8,27 @@ export class Folio extends XanaduElement {
   imageInput: HTMLInputElement | undefined;
   previewImage: HTMLImageElement | null | undefined;
   labelElement: HTMLLabelElement | null | undefined;
+  imageInputHandler: () => void;
 
-  // eslint-disable-next-line wc/no-constructor
   constructor() {
     super();
     if (!this.shadowRoot) {
       const template = Folio.prepareTemplate(folioTemplate({}));
       this.attachShadow({ mode: 'open' }).append(template);
     }
-    this.prepareElements();
+    this.#prepareElements();
+    this.imageInputHandler = this.#createImageInputChangeHandler();
   }
 
   connectedCallback() {
-    this.imageInput?.addEventListener('change', () => {
-      this.previewSelectedImage();
-    });
+    this.imageInput?.addEventListener('change', this.imageInputHandler);
   }
 
   disconnectedCallback() {
-    this.imageInput?.removeEventListener('change', () => {
-      this.previewSelectedImage();
-    });
+    this.imageInput?.removeEventListener('change', this.imageInputHandler);
   }
 
-  prepareElements() {
+  #prepareElements() {
     Folio.assert(
       this.shadowRoot instanceof ShadowRoot,
       'A ShadowRoot needs to be declared in the DOM.'
@@ -44,6 +41,12 @@ export class Folio extends XanaduElement {
       this.previewImage = document.createElement('img');
     }
     this.labelElement = this.shadowRoot.querySelector('label');
+  }
+
+  #createImageInputChangeHandler() {
+    return () => {
+      this.previewSelectedImage();
+    };
   }
 
   previewSelectedImage() {

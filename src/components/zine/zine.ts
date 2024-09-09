@@ -1,29 +1,62 @@
-/* eslint-disable unicorn/no-abusive-eslint-disable */
-/* eslint-disable */
-// @ts-nocheck
-// import { zineTemplate } from './templates.ts';
+import XanaduElement from '../../xanadu-element.ts';
+import { zineTemplate } from './templates.ts';
 
 /**
  * A class to represent the Zine web component
+ *
  */
-export class Zine extends HTMLElement {
-  // eslint-disable-next-line wc/no-constructor
+export class Zine extends XanaduElement {
+  button: HTMLButtonElement | null | undefined;
+  dialog: HTMLDialogElement | null | undefined;
+  closeButtonHandler: () => void;
+
   constructor() {
     super();
+    if (!this.shadowRoot) {
+      const template = Zine.prepareTemplate(zineTemplate({}));
+      this.attachShadow({ mode: 'open' }).append(template);
+    }
+    Zine.assert(
+      this.shadowRoot instanceof ShadowRoot,
+      'A ShadowRoot needs to be declared in the DOM.'
+    );
+    this.button = this.shadowRoot.querySelector('button') as HTMLButtonElement;
+    this.dialog = this.shadowRoot.querySelector('dialog');
+    this.closeButtonHandler = this.#createCloseButtonClickHandler();
+  }
+
+  #createCloseButtonClickHandler() {
+    return () => {
+      this.dialog?.close();
+      this.removeAttribute('open');
+    };
+  }
+
+  connectedCallback() {
     if (this.shadowRoot) {
-      const imageInput = this.shadowRoot.querySelector('#file');
-      const previewImage = this.shadowRoot.querySelector('#previewImage');
-      const previewSelectedImage = () => {
-        const [file] = imageInput.files;
-        if (file) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.addEventListener('load', (e) => {
-            previewImage.src = e.target.result;
-          });
-        }
-      };
-      imageInput.addEventListener('change', previewSelectedImage);
+      this.button?.addEventListener('click', this.closeButtonHandler);
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.shadowRoot) {
+      this.button?.removeEventListener('click', this.closeButtonHandler);
+    }
+  }
+
+  /**
+   * The list of attributes which will call the a`attributeChangedCallback`
+   */
+  static get observedAttributes(): string[] {
+    return ['open'];
+  }
+
+  attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
+    if (newValue !== null) {
+      this.dialog?.show();
+    }
+    if (newValue === null) {
+      this.dialog?.close();
     }
   }
 
@@ -32,6 +65,12 @@ export class Zine extends HTMLElement {
    */
   static register(tagName?: string) {
     globalThis.window.customElements.define(tagName || 'x-zine', Zine);
+  }
+
+  addStylesheet(styles: CSSStyleSheet) {
+    if (this.shadowRoot && styles) {
+      this.shadowRoot.adoptedStyleSheets = [styles];
+    }
   }
 }
 

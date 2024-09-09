@@ -1,4 +1,4 @@
-export const zineTemplate = `<div class="is-stories">
+export const storyTemplate = `<div class="is-stories">
       <section class="is-user">
         <article
           class="is-story"

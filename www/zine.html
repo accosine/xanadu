@@ -13,195 +13,28 @@
     />
   </head>
   <body>
-    <!-- <header>
-      <h1>Vite + Web Components</h1>
-      <h1 style="position: fixed">Hi Zine Web Component</h1>
-    </header> -->
+    <header>
+      <h1>Hi Zine Web Component</h1>
+    </header>
     <main>
       <!-- Write HTML just like a web page -->
-      <x-zine>
-        <template shadowrootmode="open">
-          <style>
-            :host {
-              height: 100%;
-              background-color: brown;
-              section {
-                display: grid;
-                grid-template-rows: repeat(4, 25%);
-                grid-template-columns: 1fr 1fr;
-                height: 100%;
-              }
-              label {
-                position: absolute;
-              }
-
-              /* visibility: hidden etc. wont work */
-              [type='file'] {
-                width: 0.1px;
-                height: 0.1px;
-                opacity: 0;
-                overflow: hidden;
-                position: absolute;
-                z-index: -1;
-              }
-
-              [type='file']:focus + label {
-                /* keyboard navigation */
-                outline: 1px dotted #000;
-                outline: -webkit-focus-ring-color auto 5px;
-              }
-
-              [type='file'] + label * {
-                pointer-events: none;
-              }
-
-              img {
-                width: 100%;
-                height: 100%;
-              }
-
-              .container {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                justify-content: center;
-              }
-              dialog {
-                border: unset;
-                height: 100%;
-                left: 0px;
-                margin: unset;
-                overflow: scroll;
-                padding: unset;
-                position: fixed;
-                top: 0px;
-              }
-
-              @page {
-                margin: 0;
-                size: A4;
-              }
-              .sheet {
-                margin: 0;
-                overflow: hidden;
-                position: relative;
-                box-sizing: border-box;
-                page-break-after: always;
-              }
-
-              /** Paper sizes **/
-              dialog.A3 .sheet {
-                width: 297mm;
-                height: 419mm;
-              }
-              dialog.A3.landscape .sheet {
-                width: 420mm;
-                height: 296mm;
-              }
-              dialog.A4 .sheet {
-                width: 210mm;
-                height: 296mm;
-              }
-              dialog.A4.landscape .sheet {
-                width: 297mm;
-                height: 209mm;
-              }
-              dialog.A5 .sheet {
-                width: 148mm;
-                height: 209mm;
-              }
-              dialog.A5.landscape .sheet {
-                width: 210mm;
-                height: 147mm;
-              }
-              dialog.letter .sheet {
-                width: 216mm;
-                height: 279mm;
-              }
-              dialog.letter.landscape .sheet {
-                width: 280mm;
-                height: 215mm;
-              }
-              dialog.legal .sheet {
-                width: 216mm;
-                height: 356mm;
-              }
-              dialog.legal.landscape .sheet {
-                width: 357mm;
-                height: 215mm;
-              }
-
-              /** Padding area **/
-              .sheet.padding-10mm {
-                padding: 10mm;
-              }
-              .sheet.padding-15mm {
-                padding: 15mm;
-              }
-              .sheet.padding-20mm {
-                padding: 20mm;
-              }
-              .sheet.padding-25mm {
-                padding: 25mm;
-              }
-
-              /** For screen preview **/
-              @media screen {
-                dialog {
-                  background: #e0e0e0;
-                }
-                .sheet {
-                  background: white;
-                  box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3);
-                  margin: 5mm auto;
-                }
-              }
-
-              /** Fix for Chrome issue #273306 **/
-              @media print {
-                dialog.A3.landscape {
-                  width: 420mm;
-                }
-                dialog.A3,
-                dialog.A4.landscape {
-                  width: 297mm;
-                }
-                dialog.A4,
-                dialog.A5.landscape {
-                  width: 210mm;
-                }
-                dialog.A5 {
-                  width: 148mm;
-                }
-                dialog.letter,
-                dialog.legal {
-                  width: 216mm;
-                }
-                dialog.letter.landscape {
-                  width: 280mm;
-                }
-                dialog.legal.landscape {
-                  width: 357mm;
-                }
-              }
-            }
-          </style>
-          <dialog open class="A4">
-            <section class="sheet">
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-              <x-folio>%VITE_XANADU_COMPONENT_FOLIO_DSD%</x-folio>
-            </section>
-          </dialog>
-        </template>
-      </x-zine>
+      <button role="button">show</button>
+      <x-zine>%VITE_XANADU_COMPONENT_ZINE_DSD%</x-zine>
     </main>
   </body>
+  <script>
+    const showButton = document.querySelector('button');
+    const zine = document.querySelector('x-zine');
+
+    // "Show the dialog" button opens the dialog modally
+    showButton.addEventListener('click', () => {
+      const openAttr = zine.hasAttribute('open');
+      if (openAttr) {
+        zine.removeAttribute('open');
+      }
+      if (!openAttr) {
+        zine.setAttribute('open', '');
+      }
+    });
+  </script>
 </html>
