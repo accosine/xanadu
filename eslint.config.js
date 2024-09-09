@@ -13,6 +13,7 @@ export default [
     languageOptions: { globals: globals.browser },
     plugins: { storybook },
     rules: {
+      'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-ternary': 'off',
       'no-undef': 'off',
       'one-var': 'off',
