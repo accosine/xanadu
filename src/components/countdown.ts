@@ -105,6 +105,7 @@ export class Countdown extends HTMLElement {
   }
 
   #reflectChangedAttributes(attributeName: string, newAttributeValue: string) {
+    // eslint-disable-next-line default-case
     switch (attributeName) {
       case 'seconds': {
         this.#seconds = Number(newAttributeValue);
@@ -120,9 +121,6 @@ export class Countdown extends HTMLElement {
       }
       case 'days': {
         this.#days = Number(newAttributeValue);
-        break;
-      }
-      default: {
         break;
       }
     }
@@ -180,15 +178,9 @@ export class Countdown extends HTMLElement {
   }
 
   static wrapDigitsInTag(
-    elements:
-      | [tagType: string, className: string, content: string][]
-      | undefined,
+    elements: [tagType: string, className: string, content: string][],
     wrapper: HTMLElement
   ): HTMLElement {
-    if (!elements) {
-      wrapper.append(document.createTextNode('00:00:00:00'));
-      return wrapper;
-    }
     for (const [index, element] of elements.entries()) {
       const [tagType, className, content] = element;
       wrapper.append(Countdown.getTemplate({ className, content, tagType }));
@@ -204,15 +196,15 @@ export class Countdown extends HTMLElement {
     hasDays,
     hasHours,
     hasMinutes,
-    hasSeconds,
     hours,
     minutes,
     seconds
-  }: GetDigitsConfigType): [string, string, string][] | undefined {
+  }: GetDigitsConfigType): [string, string, string][] {
     const daysConfig: DigitsConfigTupleType = ['span', 'days', days];
     const hoursConfig: DigitsConfigTupleType = ['span', 'hours', hours];
     const minutesConfig: DigitsConfigTupleType = ['span', 'minutes', minutes];
     const secondsConfig: DigitsConfigTupleType = ['span', 'seconds', seconds];
+
     switch (true) {
       case Boolean(hasDays): {
         return [daysConfig, hoursConfig, minutesConfig, secondsConfig];
@@ -223,11 +215,8 @@ export class Countdown extends HTMLElement {
       case Boolean(hasMinutes): {
         return [minutesConfig, secondsConfig];
       }
-      case Boolean(hasSeconds): {
-        return [secondsConfig];
-      }
       default: {
-        return global.undefined;
+        return [secondsConfig];
       }
     }
   }
@@ -259,12 +248,7 @@ export class Countdown extends HTMLElement {
       minutes,
       seconds
     });
-    if (digitsConfig?.length === ZERO) {
-      return wrapperSpan;
-    }
-    if (!digitsConfig) {
-      return wrapperSpan;
-    }
+
     return Countdown.wrapDigitsInTag(digitsConfig, wrapperSpan);
   }
 
