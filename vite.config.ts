@@ -1,10 +1,12 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
+import IstanbulPlugin from 'vite-plugin-istanbul';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { folioTemplate } from './src/components/folio/templates';
 import fs from 'node:fs';
-import IstanbulPlugin from 'vite-plugin-istanbul';
 import { zineTemplate } from './src/components/zine/templates';
 
 const folioCss = fs.readFileSync('./src/components/folio/folio.css', {
@@ -52,6 +54,9 @@ export default defineConfig({
     },
     transformer: 'lightningcss'
   },
+  esbuild: {
+    legalComments: 'inline'
+  },
   plugins: [
     dts({
       include: ['src', 'declaration.d.ts'],
@@ -63,7 +68,7 @@ export default defineConfig({
       ? [
           IstanbulPlugin({
             include: 'src/*',
-            exclude: ['node_modules', 'test/'],
+            exclude: ['node_modules', 'src/xanadu-element.ts'],
             extension: ['.js', '.ts']
           })
         ]

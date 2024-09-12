@@ -37,6 +37,7 @@ export class Folio extends XanaduElement {
       '#file'
     ) as HTMLInputElement;
     this.previewImage = this.shadowRoot.querySelector('img');
+    /* istanbul ignore if -- @preserve */
     if (!this.previewImage) {
       this.previewImage = document.createElement('img');
     }
