@@ -9,7 +9,7 @@ export const xanadu = () => {
     /**
      * Fire the web component loader, so custom elements can receive styling
      * from the outside.
-     * */
+     **/
     styler('x-countdown', countdownCss);
   });
 };
