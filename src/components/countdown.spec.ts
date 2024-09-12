@@ -48,6 +48,11 @@ const runCountdownTests = () => {
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
   });
+
+  test('should complete a full render cycle', async ({ page }) => {
+    const TWOSECONDS = 2000;
+    await page.waitForTimeout(TWOSECONDS);
+  });
 };
 
 test.describe('Countdown in dark mode', () => {

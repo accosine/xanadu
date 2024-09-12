@@ -169,6 +169,12 @@ jobs:
       - name: 👩‍🔬 Test with Playwright 🎭
         run: HOME=/root npx playwright test --project="${{ matrix.project }}"
 
+      - name: 📺 Show coverage 🎭
+        run: HOME=/root npm run coverage:report:text
+
+      - name: 🙈 Check full test coverage 🎭
+        run: HOME=/root npm run coverage:check
+
       - name: 🆙 Upload test results
         if: always()
         uses: actions/upload-artifact@v4

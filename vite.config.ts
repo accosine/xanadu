@@ -7,7 +7,7 @@ import IstanbulPlugin from 'vite-plugin-istanbul';
 
 export default defineConfig({
   build: {
-    // cssMinify: 'lightningcss',
+    cssMinify: 'lightningcss',
     lib: {
       entry: './src/index.ts',
       formats: ['es']
@@ -21,12 +21,12 @@ export default defineConfig({
     },
     sourcemap: true
   },
-  // css: {
-  //   lightningcss: {
-  //     targets: browserslistToTargets(browserslist('>= 0.25%'))
-  //   },
-  //   transformer: 'lightningcss'
-  // },
+  css: {
+    lightningcss: {
+      targets: browserslistToTargets(browserslist('>= 0.25%'))
+    },
+    transformer: 'lightningcss'
+  },
   plugins: [
     dts({
       include: ['src', 'declaration.d.ts'],
@@ -37,7 +37,7 @@ export default defineConfig({
     ...(process.env.USE_BABEL_PLUGIN_ISTANBUL
       ? [
           IstanbulPlugin({
-            include: './src/*',
+            include: 'src/*',
             exclude: ['node_modules', 'test/'],
             extension: ['.js', '.ts']
           })
