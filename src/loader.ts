@@ -8,11 +8,6 @@ export const loader = (
   customElementTag: string,
   customElementClassName: 'Countdown' | 'Folio' | 'Zine'
 ) => {
-  if (!('customElements' in globalThis.window)) {
-    console.warn('No Custom Elements available');
-    return;
-  }
-
   if (customElements.get(customElementTag)) {
     console.warn(`${customElementTag} already registered`);
     return;

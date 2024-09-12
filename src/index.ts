@@ -14,7 +14,7 @@ export const xanadu = () => {
     /**
      * Fire the web component styler, so custom elements can receive styling
      * from the outside.
-     * */
+     **/
     styler('x-countdown', countdownCss);
     styler('x-zine', zineCss);
     styler('x-folio', folioCss);

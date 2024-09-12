@@ -79,12 +79,6 @@
     }
   }
 
-  @page {
-    /* stylelint-disable-next-line csstree/validator */
-    margin: 0;
-    size: a4;
-  }
-
   /* stylelint-disable-next-line selector-disallowed-list */
   & .a4 {
     & .sheet {

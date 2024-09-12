@@ -1,7 +1,7 @@
 import type {
   DigitsConfigTupleType,
-  GetDigitsConfigType,
-} from "./countdown.types.ts";
+  GetDigitsConfigType
+} from './countdown.types.ts';
 import {
   HOURS,
   MILLISECONDS,
@@ -10,8 +10,8 @@ import {
   SECONDS,
   THOUSAND,
   TWO,
-  ZERO,
-} from "../../constants.ts";
+  ZERO
+} from '../../constants.ts';
 
 /**
  * A class to represent the StopWatch element
@@ -22,7 +22,7 @@ export class Countdown extends HTMLElement {
    */
   static register(tagName?: string) {
     globalThis.window.customElements.define(
-      tagName || "x-countdown",
+      tagName || 'x-countdown',
       Countdown
     );
   }
@@ -31,7 +31,7 @@ export class Countdown extends HTMLElement {
    * The list of attributes which will call the a`attributeChangedCallback`
    */
   static get observedAttributes(): string[] {
-    return ["days", "hours", "minutes", "seconds"];
+    return ['days', 'hours', 'minutes', 'seconds'];
   }
 
   /**
@@ -40,7 +40,7 @@ export class Countdown extends HTMLElement {
   static getTemplate({
     content,
     tagType,
-    className,
+    className
   }: {
     content: HTMLElement | string;
     tagType: string;
@@ -48,7 +48,7 @@ export class Countdown extends HTMLElement {
   }): HTMLSpanElement {
     const span = document.createElement(tagType);
     if (className) {
-      span.setAttribute("class", className);
+      span.setAttribute('class', className);
     }
     span.append(content);
     return span;
@@ -57,7 +57,7 @@ export class Countdown extends HTMLElement {
   /**
    * Give this element its own encapsulated DOM
    */
-  #shadowRoot: ShadowRoot = this.attachShadow({ mode: "open" });
+  #shadowRoot: ShadowRoot = this.attachShadow({ mode: 'open' });
 
   // Initialize private state
 
@@ -86,7 +86,7 @@ export class Countdown extends HTMLElement {
       hasDays: Object.create(null),
       hasHours: Object.create(null),
       hasMinutes: Object.create(null),
-      hasSeconds: Object.create(null),
+      hasSeconds: Object.create(null)
     });
 
     this.#shadowRoot.replaceChildren(countdown);
@@ -105,24 +105,22 @@ export class Countdown extends HTMLElement {
   }
 
   #reflectChangedAttributes(attributeName: string, newAttributeValue: string) {
+    // eslint-disable-next-line default-case
     switch (attributeName) {
-      case "seconds": {
+      case 'seconds': {
         this.#seconds = Number(newAttributeValue);
         break;
       }
-      case "minutes": {
+      case 'minutes': {
         this.#minutes = Number(newAttributeValue);
         break;
       }
-      case "hours": {
+      case 'hours': {
         this.#hours = Number(newAttributeValue);
         break;
       }
-      case "days": {
+      case 'days': {
         this.#days = Number(newAttributeValue);
-        break;
-      }
-      default: {
         break;
       }
     }
@@ -180,20 +178,14 @@ export class Countdown extends HTMLElement {
   }
 
   static wrapDigitsInTag(
-    elements:
-      | [tagType: string, className: string, content: string][]
-      | undefined,
+    elements: [tagType: string, className: string, content: string][],
     wrapper: HTMLElement
   ): HTMLElement {
-    if (!elements) {
-      wrapper.append(document.createTextNode("00:00:00:00"));
-      return wrapper;
-    }
     for (const [index, element] of elements.entries()) {
       const [tagType, className, content] = element;
       wrapper.append(Countdown.getTemplate({ className, content, tagType }));
       if (index + ONE < elements.length) {
-        wrapper.append(Countdown.getTemplate({ content: ":", tagType }));
+        wrapper.append(Countdown.getTemplate({ content: ':', tagType }));
       }
     }
     return wrapper;
@@ -204,15 +196,15 @@ export class Countdown extends HTMLElement {
     hasDays,
     hasHours,
     hasMinutes,
-    hasSeconds,
     hours,
     minutes,
-    seconds,
-  }: GetDigitsConfigType): [string, string, string][] | undefined {
-    const daysConfig: DigitsConfigTupleType = ["span", "days", days];
-    const hoursConfig: DigitsConfigTupleType = ["span", "hours", hours];
-    const minutesConfig: DigitsConfigTupleType = ["span", "minutes", minutes];
-    const secondsConfig: DigitsConfigTupleType = ["span", "seconds", seconds];
+    seconds
+  }: GetDigitsConfigType): [string, string, string][] {
+    const daysConfig: DigitsConfigTupleType = ['span', 'days', days];
+    const hoursConfig: DigitsConfigTupleType = ['span', 'hours', hours];
+    const minutesConfig: DigitsConfigTupleType = ['span', 'minutes', minutes];
+    const secondsConfig: DigitsConfigTupleType = ['span', 'seconds', seconds];
+
     switch (true) {
       case Boolean(hasDays): {
         return [daysConfig, hoursConfig, minutesConfig, secondsConfig];
@@ -223,11 +215,8 @@ export class Countdown extends HTMLElement {
       case Boolean(hasMinutes): {
         return [minutesConfig, secondsConfig];
       }
-      case Boolean(hasSeconds): {
-        return [secondsConfig];
-      }
       default: {
-        return global.undefined;
+        return [secondsConfig];
       }
     }
   }
@@ -236,7 +225,7 @@ export class Countdown extends HTMLElement {
     hasDays,
     hasHours,
     hasMinutes,
-    hasSeconds,
+    hasSeconds
   }: {
     hasDays: string | null;
     hasHours: string | null;
@@ -244,11 +233,11 @@ export class Countdown extends HTMLElement {
     hasSeconds: string | null;
   }) {
     const [days, hours, minutes, seconds] = this.#calculateCountdown().map(
-      (number) => String(number).padStart(TWO, "0")
+      (number) => String(number).padStart(TWO, '0')
     );
 
-    const wrapperSpan = document.createElement("span");
-    wrapperSpan.setAttribute("part", "countdown");
+    const wrapperSpan = document.createElement('span');
+    wrapperSpan.setAttribute('part', 'countdown');
     const digitsConfig = Countdown.getDigitsConfig({
       days,
       hasDays,
@@ -257,14 +246,9 @@ export class Countdown extends HTMLElement {
       hasSeconds,
       hours,
       minutes,
-      seconds,
+      seconds
     });
-    if (digitsConfig?.length === ZERO) {
-      return wrapperSpan;
-    }
-    if (!digitsConfig) {
-      return wrapperSpan;
-    }
+
     return Countdown.wrapDigitsInTag(digitsConfig, wrapperSpan);
   }
 
@@ -272,10 +256,10 @@ export class Countdown extends HTMLElement {
     const now = Date.now();
     if (now - this.#lastrender > THOUSAND && this.#remainingTimeInMs > ZERO) {
       const countdown = this.#buildCountdown({
-        hasDays: this.getAttribute("days"),
-        hasHours: this.getAttribute("hours"),
-        hasMinutes: this.getAttribute("minutes"),
-        hasSeconds: this.getAttribute("seconds"),
+        hasDays: this.getAttribute('days'),
+        hasHours: this.getAttribute('hours'),
+        hasMinutes: this.getAttribute('minutes'),
+        hasSeconds: this.getAttribute('seconds')
       });
       this.#shadowRoot.replaceChildren(countdown);
       this.#lastrender = now;
