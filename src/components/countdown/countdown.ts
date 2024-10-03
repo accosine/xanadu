@@ -11,7 +11,7 @@ import {
   THOUSAND,
   TWO,
   ZERO
-} from '../constants.ts';
+} from '../../constants.ts';
 
 /**
  * A class to represent the StopWatch element

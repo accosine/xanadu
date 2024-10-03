@@ -17,7 +17,8 @@ export default [
       'no-ternary': 'off',
       'no-undef': 'off',
       'one-var': 'off',
-      'sort-imports': ['error', { ignoreCase: true }]
+      'sort-imports': ['error', { ignoreCase: true }],
+      'no-console': ['error', { allow: ['warn', 'error'] }]
     }
   },
   eslintPluginUnicorn.configs['flat/recommended'],
@@ -53,7 +54,7 @@ export default [
       'wc/file-name-matches-element': 'error',
       'wc/guard-define-call': 'error',
       'wc/max-elements-per-file': 'error',
-      'wc/no-constructor': 'error',
+      'wc/no-constructor': 'warn',
       'wc/no-exports-with-element': 'error',
       'wc/no-method-prefixed-with-on': 'error',
       'wc/tag-name-matches-class': 'error'

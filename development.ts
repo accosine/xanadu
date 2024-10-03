@@ -1,4 +1,4 @@
-import { Countdown } from './src/components/countdown.ts';
+import { Countdown } from './src/components/countdown/countdown.ts';
 import xanadu from './src/index.ts';
 
 xanadu();

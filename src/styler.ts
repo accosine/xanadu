@@ -1,4 +1,4 @@
-import { Countdown } from './components/countdown.ts';
+import { Countdown } from './components/countdown/countdown.ts';
 
 type AllCustomElements = Countdown;
 
@@ -9,11 +9,11 @@ export const styler = <T extends AllCustomElements>(
   const styles = new CSSStyleSheet();
   styles.replaceSync(customElementStyles);
 
-  const allCountdowns = document.querySelectorAll(
+  const allCustomElements = document.querySelectorAll(
     customElementTag
   ) as NodeListOf<T>;
 
-  for (const customElement of allCountdowns) {
+  for (const customElement of allCustomElements) {
     customElement.addStylesheet(styles);
   }
 };

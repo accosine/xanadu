@@ -1,0 +1,37 @@
+:host {
+  display: flex;
+  background-color: hotpink;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & label {
+    position: absolute;
+    cursor: pointer;
+  }
+
+  & input[type='file'] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: auto;
+    position: absolute;
+    z-index: -1;
+  }
+
+  & [type='file']:focus + label {
+    /* keyboard navigation */
+    /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+  }
+
+  & [type='file'] + label * {
+    pointer-events: none;
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+}

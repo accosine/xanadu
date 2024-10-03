@@ -1,10 +1,10 @@
-import { expect, test } from '../../e2e/baseFixtures.ts';
+import { expect, test } from '../../../e2e/baseFixtures.ts';
 import AxeBuilder from '@axe-core/playwright';
-import { ONE } from '../constants.ts';
+import { ONE } from '../../constants.ts';
 import type { Page } from '@playwright/test';
 
 test.beforeEach(async ({ page }: { page: Page }) => {
-  await page.goto('/');
+  await page.goto('/www/countdown');
 });
 
 const runCountdownTests = () => {

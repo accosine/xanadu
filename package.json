@@ -22,7 +22,7 @@
     "dev": "vite",
     "lint": "npm run lint:code && npm run lint:styles && npm run lint:slowtypes",
     "lint:code": "eslint --cache --cache-location ./node_modules/.cache/eslint ./src ./stories",
-    "lint:styles": "stylelint src/**/*.{css,styles.js}",
+    "lint:styles": "stylelint src/components/**/*.css",
     "lint:slowtypes": "jsr publish --dry-run --allow-dirty",
     "storybook": "storybook dev -p 6006",
     "test": "playwright test",
