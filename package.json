@@ -62,7 +62,7 @@
     "jsr": "0.13.2",
     "lightningcss": "1.27.0",
     "lit": "3.2.1",
-    "npm-check-updates": "17.1.5",
+    "npm-check-updates": "17.1.9",
     "nyc": "17.1.0",
     "prettier": "3.3.3",
     "rimraf": "^6.0.1",
