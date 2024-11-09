@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.0",
-    "@efficientcss/stylelint-config-ecss": "1.0.0-beta-11",
+    "@efficientcss/stylelint-config-ecss": "1.0.0-beta-13",
     "@eslint/js": "9.14.0",
     "@playwright/test": "1.48.2",
     "@storybook/addon-essentials": "8.4.2",
