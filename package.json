@@ -42,7 +42,7 @@
   "devDependencies": {
     "@axe-core/playwright": "4.10.1",
     "@efficientcss/stylelint-config-ecss": "1.0.0-beta-13",
-    "@eslint/js": "9.15.0",
+    "@eslint/js": "9.16.0",
     "@playwright/test": "1.49.0",
     "@storybook/addon-essentials": "8.4.6",
     "@storybook/addon-links": "8.4.6",
@@ -51,7 +51,7 @@
     "@storybook/web-components": "8.4.6",
     "@storybook/web-components-vite": "8.4.6",
     "browserslist": "4.24.2",
-    "eslint": "9.15.0",
+    "eslint": "9.16.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-n": "17.14.0",
     "eslint-plugin-prettier": "5.2.1",
