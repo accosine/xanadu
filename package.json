@@ -64,7 +64,7 @@
     "lit": "3.2.1",
     "npm-check-updates": "17.1.14",
     "nyc": "17.1.0",
-    "prettier": "3.5.0",
+    "prettier": "3.5.1",
     "rimraf": "^6.0.1",
     "storybook": "8.5.5",
     "stylelint": "16.14.1",
