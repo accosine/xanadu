@@ -60,7 +60,7 @@
     "eslint-plugin-wc": "2.2.1",
     "globals": "16.0.0",
     "jsr": "0.13.4",
-    "lightningcss": "1.29.2",
+    "lightningcss": "1.29.3",
     "lit": "3.2.1",
     "npm-check-updates": "17.1.15",
     "nyc": "17.1.0",
