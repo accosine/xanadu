@@ -3,7 +3,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import storybook from 'eslint-plugin-storybook';
 import tseslint from 'typescript-eslint';
-import wc from 'eslint-plugin-wc';
+import { configs as wcconfigs } from 'eslint-plugin-wc';
 
 export default [
   { ...pluginJs.configs.all },
@@ -24,38 +24,31 @@ export default [
   {
     rules: { 'unicorn/better-regex': 'warn' }
   },
-  // 👇 Replace with "wc.configs.all" after it
-  // has become truly compatible with flat config
+  wcconfigs['flat/recommended'],
+
   {
-    // ...wc.configs.all,
-    plugins: { wc },
     rules: {
-      // wc - recommended
-      'wc/no-constructor-attributes': 'error',
-      'wc/no-invalid-element-name': 'error',
-      'wc/no-self-class': 'error',
-
-      // wc - best practice
       'wc/attach-shadow-constructor': 'error',
-      'wc/guard-super-call': 'error',
-      'wc/no-child-traversal-in-attributechangedcallback': 'error',
-      'wc/no-child-traversal-in-connectedcallback': 'off',
-      'wc/no-closed-shadow-root': 'error',
-      'wc/no-constructor-params': 'error',
-      'wc/no-customized-built-in-elements': 'error',
-      'wc/no-invalid-extends': 'error',
-      'wc/no-typos': 'error',
-      'wc/require-listener-teardown': 'error',
-
-      // wc - preference/convention
       'wc/define-tag-after-class-definition': 'off',
       'wc/expose-class-on-global': 'off',
       'wc/file-name-matches-element': 'error',
       'wc/guard-define-call': 'error',
+      'wc/guard-super-call': 'error',
       'wc/max-elements-per-file': 'error',
+      'wc/no-child-traversal-in-attributechangedcallback': 'error',
+      'wc/no-child-traversal-in-connectedcallback': 'off',
+      'wc/no-closed-shadow-root': 'error',
       'wc/no-constructor': 'error',
+      'wc/no-constructor-attributes': 'error',
+      'wc/no-constructor-params': 'error',
+      'wc/no-customized-built-in-elements': 'error',
       'wc/no-exports-with-element': 'error',
+      'wc/no-invalid-element-name': 'error',
+      'wc/no-invalid-extends': 'error',
       'wc/no-method-prefixed-with-on': 'error',
+      'wc/no-self-class': 'error',
+      'wc/no-typos': 'error',
+      'wc/require-listener-teardown': 'error',
       'wc/tag-name-matches-class': 'error'
     }
   }
