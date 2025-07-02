@@ -26,6 +26,7 @@ updates:
         patterns:
           - '@storybook*'
           - 'storybook'
+          - 'eslint-plugin-storybook'
       eslint:
         patterns:
           - '@eslint/js'
