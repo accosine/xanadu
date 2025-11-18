@@ -47,7 +47,7 @@
     "@storybook/web-components": "9.1.16",
     "@storybook/web-components-vite": "9.1.16",
     "@storybook/addon-docs": "9.1.16",
-    "browserslist": "4.27.0",
+    "browserslist": "4.28.0",
     "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-n": "17.23.1",
