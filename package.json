@@ -55,7 +55,7 @@
     "eslint-plugin-storybook": "10.2.0",
     "eslint-plugin-unicorn": "62.0.0",
     "eslint-plugin-wc": "3.0.2",
-    "globals": "16.5.0",
+    "globals": "17.0.0",
     "jsr": "0.13.5",
     "lightningcss": "1.31.1",
     "lit": "3.3.2",
