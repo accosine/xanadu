@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.13.0
+        uses: styfle/cancel-workflow-action@0.13.1
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v6
@@ -34,7 +34,7 @@ jobs:
 
       - name: 🆙 Upload test screenshots
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: test-screenshots
           path: src/components/**/*.png
